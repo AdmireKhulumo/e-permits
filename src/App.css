@@ -1,38 +1,727 @@
-.App {
+html,
+body{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: rgb(245, 245, 245);
+}
+
+.container{
+  margin: 80px auto 0 auto;
+  max-width: 1200px;
+  align-items:center;
+  justify-content: center;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.nav-container{
+  margin: auto;
+}
+
+HEAD
+div {
+    display: block;
+}
+
+.freebirdFormviewerViewCenteredContent {
+    margin: auto;
+    max-width: 90vw;
+    width: 640px;
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader>div {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.m2 .freebirdCommonViewSecurequizSecureQuizBannerContainer {
+  background-color: transparent;
+}
+
+.freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+
+.freebirdCommonViewSecurequizSecureQuizBannerContainer {
+  background-color: #f9f9f9;
+}
+
+.m2 .freebirdFormviewerViewFormContent {
+  color: #202124;
+  padding: 0;
+}
+
+.freebirdFormviewerViewFormContent {
+  color: rgba(0,0,0,.87);
+  padding: 34px 0;
+}
+
+.m2 .freebirdFormviewerViewFormCard {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  word-wrap: break-word;
+}
+
+.freebirdFormviewerViewFormCard {
+  background-color: #fff;
+  margin-bottom: 48px;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  padding-bottom: 6px;
+  word-wrap: break-word;
+}
+
+.m2 .freebirdCommonViewSecurequizSecureQuizBannerContainer {
+  background-color: transparent;
+}
+
+.freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+
+.freebirdCommonViewSecurequizSecureQuizBannerContainer {
+  background-color: #f9f9f9;
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.freebirdFormviewerViewFormContent {
+  color: rgba(0,0,0,.87);
+  padding: 34px 0;
+}
+
+.m2 .freebirdFormviewerViewFormCard {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  word-wrap: break-word;
+}
+
+.freebirdFormviewerViewFormCard {
+  background-color: #fff;
+  margin-bottom: 48px;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  padding-bottom: 6px;
+  word-wrap: break-word;
+}
+
+.freebirdFormviewerViewHeaderRequiredLegend, .freebirdFormviewerViewHeaderDisclosure {
+  margin-top: 22px;
+  font-size: 13px;
+}
+
+.m2 .freebirdFormviewerViewFormContent {
+  color: #202124;
+  padding: 0;
+}
+
+.freebirdFormviewerViewFormContent {
+  color: rgba(0,0,0,.87);
+  padding: 34px 0;
+}
+
+.m2 .freebirdFormviewerViewFormCard {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  word-wrap: break-word;
+}
+
+.freebirdFormviewerViewFormCard {
+  background-color: #fff;
+  margin-bottom: 48px;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  padding-bottom: 6px;
+  word-wrap: break-word;
+}
+
+.freebirdFormviewerViewHeaderRequiredLegend, .m2 .freebirdFormviewerViewHeaderRequiredLegend {
+  color: #d93025;
+}
+
+.m2 .freebirdFormviewerViewHeaderRequiredLegend {
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .2px;
+  line-height: 20px;
+  margin-top: 12px;
+}
+
+.freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+
+.freebirdFormviewerViewHeaderRequiredLegend, .freebirdFormviewerViewHeaderDisclosure {
+  margin-top: 22px;
+  font-size: 13px;
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 0;
+  padding-right: 0;
+}
+.freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+.freebirdFormviewerViewHeaderTitleRow {
+  -webkit-box-align: center;
+  box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.m2 .freebirdFormviewerViewHeaderTitle {
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  color: #202124;
+  line-height: 135%;
+  max-width: 100%;
+  min-width: 0%;
+}
+
+.freebirdFormviewerViewHeaderTitle {
+  font-size: 24px;
+}
+
+.freebirdFormviewerViewHeaderTitle {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 34px;
+  line-height: 135%;
+  max-width: 100%;
+  min-width: 0%;
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+.freebirdFormviewerViewHeaderTitleRow {
+  -webkit-box-align: center;
+  box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 34px;
+  padding-right: 34px;
+}
+.freebirdSolidBackground {
+  background-color: rgb(61, 143, 45);
+  color: rgba(255, 255, 255, 1);
+}
+.freebirdFormviewerViewHeaderThemeStripe {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  height: 10px;
+  left: -1px;
+  position: absolute;
+  top: -1px;
+  width: calc(100% + 2px);
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader {
+    margin-top: 12px;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 24px;
+    padding-top: 22px;
+    position: relative;
+}
+
+.freebirdFormviewerViewHeaderHeader {
+    margin-bottom: 22px;
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 0;
+  padding-right: 0;
+}
+.m2 .freebirdFormviewerViewHeaderDescription {
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .2px;
+  line-height: 20px;
+  color: #202124;
+  margin-top: 12px;
+}
+
+.freebirdFormviewerViewHeaderHeader>div {
+  padding-left: 54px;
+  padding-right: 54px;
+}
+.freebirdFormviewerViewHeaderDescription {
+  white-space: pre-wrap;
+  line-height: 135%;
+  margin-top: 9px;
+  margin-left: 30px;
+  font-size: 13px;
+}
+
+.m2 .freebirdFormviewerViewHeaderTitle {
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  color: #202124;
+  line-height: 135%;
+  max-width: 100%;
+  min-width: 0%;
+}
+
+@media (max-width: 480px)
+.freebirdFormviewerViewHeaderTitle {
+  font-size: 24px;
+}
+.freebirdFormviewerViewHeaderTitle {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 34px;
+  line-height: 135%;
+  max-width: 100%;
+  min-width: 0%;
+}
+
+.m2 .freebirdFormviewerViewFormContent>div, .freebirdFormviewerViewFormContent>.freebirdFormviewerViewNoPadding {
+  padding: 0;
+}
+.freebirdFormviewerViewFormContent>.freebirdFormviewerViewItemList {
+  padding: 0 17px;
+}
+
+.freebirdFormviewerViewFormContent>div, .freebirdFormviewerViewFormContent>.freebirdFormviewerViewItemList>.freebirdFormviewerViewSubmitMessage {
+  padding: 0 34px;
+}
+
+.m2 .freebirdFormviewerViewFormContent {
+  color: #202124;
+  padding: 0;
+}
+
+.freebirdFormviewerViewFormContent {
+  color: rgba(0,0,0,.87);
+  padding: 34px 0;
+}
+
+.m2 .freebirdFormviewerViewItemsItemItem {
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 24px;
+  margin-top: 0;
+  page-break-inside: avoid;
+}
+
+.freebirdFormviewerViewItemsItemItem {
+  background-color: transparent;
+  margin-top: 2px;
+  padding: 16px 17px;
+  page-break-inside: avoid;
+  -webkit-transition: background-color 200ms cubic-bezier(0.0,0.0,0.2,1);
+  transition: background-color 200ms cubic-bezier(0.0,0.0,0.2,1);
+}
+
+.m2 .freebirdFormviewerViewItemsItemItemHeader {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.freebirdFormviewerViewItemsItemItemHeader {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.freebirdFormviewerViewItemsItemItemTitleDescContainer {
+  -webkit-box-align: start;
+  box-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  max-width: 100%;
+  min-width: 0%;
+  position: relative;
+}
+
+.m2 .freebirdFormviewerViewItemsItemItemTitleContainer {
+  -webkit-align-items: align_items_compat(center,center);
+  align-items: align_items_compat(center,center);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+}
+
+.m2 .freebirdFormviewerViewItemsItemItemTitle {
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .1px;
+  line-height: 24px;
+  color: #202124;
+  font-weight: 400;
+  width: 100%;
+  word-break: break-word;
+}
+.freebirdFormviewerViewItemsItemItemTitle {
+  color: #000;
+  font-size: 20px;
+  line-height: 135%;
+  width: 100%;
+  word-break: break-word;
+}
+
+.freebirdFormviewerViewItemsItemRequiredAsterisk {
+  color: #d93025;
+}
+
+.m2 .freebirdFormviewerViewItemsItemItemTitle {
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .1px;
+  line-height: 24px;
+  color: #202124;
+  font-weight: 400;
+  width: 100%;
+  word-break: break-word;
+}
+.freebirdFormviewerViewItemsItemItemTitle {
+  color: #000;
+  font-size: 20px;
+  line-height: 135%;
+  width: 100%;
+  word-break: break-word;
+}
+.m2 .freebirdFormviewerViewFormContent {
+  color: #202124;
+  padding: 0;
+}
+.freebirdFormviewerViewFormContent {
+  color: rgba(0,0,0,.87);
+  padding: 34px 0;
+}
+
+.m2 .freebirdFormviewerViewItemsTextItemWrapper {
+  -webkit-box-align: center;
+  box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.freebirdFormviewerViewItemsTextItemWrapper {
+  -webkit-box-align: center;
+  box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  padding: .5em .5em .5em 0;
+}
+
+@media (max-width: 480px) 
+.freebirdFormviewerViewItemsTextTextItem .freebirdFormviewerViewItemsTextShortText:not(.freebirdFormviewerViewItemsTextDisabledText), .freebirdFormviewerViewItemsTextTextItem .freebirdFormviewerViewItemsTextShortText.freebirdFormviewerViewItemsTextDisabledText {
+    width: 100%;
+}
+
+.freebirdFormviewerViewItemsTextTextItem .freebirdFormviewerViewItemsTextShortText:not(.freebirdFormviewerViewItemsTextDisabledText) {
+    width: 50%;
+}
+.quantumWizTextinputPaperinputEl {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    outline: none;
+    padding-bottom: 8px;
+    width: 200px;
+}
+
+.quantumWizTextinputPaperinputMainContent {
+  height: 40px;
+  position: relative;
+  vertical-align: top;
+}
+
+.quantumWizTextinputPaperinputContentArea {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: relative;
+  top: 14px;
+}
+
+.quantumWizTextinputPaperinputInputArea {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  -webkit-flex-shrink: 1;
+  flex-shrink: 1;
+  min-width: 0%;
+  position: relative;
+}
+
+.m2 .freebirdFormviewerViewItemsTextTextItem .freebirdFormviewerViewItemsTextShortText .exportInput, .m2 .freebirdFormviewerViewItemsTextTextItem .freebirdFormviewerViewItemsTextLongText .exportTextarea {
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .2px;
+  line-height: 20px;
+  color: #202124;
+}
+
+.quantumWizTextinputPaperinputInput {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  -webkit-flex-shrink: 1;
+  flex-shrink: 1;
+  background-color: transparent;
+  border: none;
+  display: block;
+  font: 400 16px Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+  height: 24px;
+  line-height: 24px;
+  margin: 0;
+  min-width: 0%;
+  outline: none;
+  padding: 0;
+  z-index: 0;
+}
+input[Attributes Style] {
+  unicode-bidi: -webkit-isolate;
+}
+user agent stylesheet
+input {
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  color: -internal-light-dark-color(black, white);
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  -webkit-appearance: textfield;
+  background-color: -internal-light-dark-color(white, black);
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+  margin: 0em;
+  font: 400 13.3333px Arial;
+  padding: 1px 0px;
+  border-width: 2px;
+  border-style: inset;
+  border-color: initial;
+  border-image: initial;
+}
+
+.freebirdFormviewerViewItemsTextTextItem .freebirdFormviewerViewItemsTextLongText .exportLabel {
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .2px;
+  line-height: 20px;
+  color: #70757a;
+}
+
+.quantumWizTextinputPaperinputPlaceholder {
+  color: rgba(0,0,0,0.38);
+  font: 400 16px Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+  max-width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 2px;
+  left: 0;
+  white-space: nowrap;
+}
+
+.quantumWizTextinputPaperinputUnderline {
+  background-color: rgba(0,0,0,0.12);
+  bottom: -2px;
+  height: 1px;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.quantumWizTextinputPaperinputUnderline:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid rgba(0,0,0,0);
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.freebirdThemedInput .exportFocusUnderline {
+  background-color: rgb(41, 137, 4);
+}
+.quantumWizTextinputPaperinputFocusUnderline {
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  background-color: #4285f4;
+  bottom: -2px;
+  height: 2px;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.freebirdThemedInput .exportHint {
+  color: rgb(41, 137, 4);
+}
+
+.quantumWizTextinputPaperinputHint {
+  opacity: .3;
+}
+.quantumWizTextinputPaperinputHint {
+  pointer-events: none;
+}
+
+.m2 .freebirdFormviewerViewItemsItemErrorMessage {
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .3px;
+  line-height: 16px;
+  color: #70757a;
+  color: #d93025;
+  display: none;
+}
+.freebirdFormviewerViewItemsItemErrorMessage {
+  color: #d93025;
+  display: none;
+  font: 400 16px Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+  line-height: 135%;
+}
+
+.quantumWizTextinputPaperinputUnderline:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid rgba(0,0,0,0);
+  pointer-events: none;
+}
+
+.m2 .freebirdFormviewerViewHeaderHeader {
+    margin-top: 12px;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 24px;
+    padding-top: 22px;
+    position: relative;
+}
+
+.freebirdFormviewerViewHeaderHeader {
+    margin-bottom: 22px;
+}
+
+.freebirdFormviewerViewFormContent>.freebirdFormviewerViewItemList {
+  padding: 0 17px;
+}
+.freebirdFormviewerViewFormContent>div, .freebirdFormviewerViewFormContent>.freebirdFormviewerViewItemList>.freebirdFormviewerViewSubmitMessage {
+  padding: 0 34px;
+}
+.centered { /* Magic here */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  align-items: center;
 }
