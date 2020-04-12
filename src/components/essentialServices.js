@@ -81,7 +81,7 @@ export class essentialServices extends Component {
 
         //Sending Data to Info Display component
         let completePermitMarkup=this.state.applicationInfo?(
-        this.state.applicationInfo.map((info) => <InfoDisplay key={info.permitId} info={info}/>)
+        this.state.applicationInfo.map((info) => <InfoDisplay key={info.applicantId} info={info}/>)
         ) : <p>Loading...</p> 
  
         return (
