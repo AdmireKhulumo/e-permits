@@ -172,5 +172,4 @@ login.propTypes ={
     classes: PropTypes.object.isRequired
 }
 
-//export default withStyles(styles)({login})
 export default withRouter(login)

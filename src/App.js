@@ -52,10 +52,11 @@ if(token){
 
 export class App extends Component {
 
-  constructor(props)
+  constructor()
   {
-    super(props)
-    this.state={
+    super();
+      this.state = {
+      loggedInstatus: "NOT_LOGGED_IN",
       user:{}
     }
   }
@@ -84,7 +85,9 @@ export class App extends Component {
             <Navbar/>
             <div className="container">
               <Switch>
-                <Route exact path="/" component={verifyApplications}/>
+                <Route exact path="/" render={props =>(
+                  <verifyApplications{...props} loggedInstatus={this.state.loggedInstatus}/>
+                )}/>
                 <Route exact path="/verifyApplications" component={verifyApplications}/>
                 <Route exact path="/login" component={login}/>
                 <Route exact path="/signup" component={signup}/>

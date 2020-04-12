@@ -152,7 +152,7 @@ export class InfoDisplay extends Component {
 
 
     render() {
-        const {classes, info:{fname,sname,gender,permitId,phone,dateOfBirth,omang,nationality,physicalAddress,email,organisation,contactPerson,designation,organisationPhone,location,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
+        const {classes, info:{fname,sname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,organisation,contactPerson,designation,organisationPhone,location,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
             = this.props; //same as const classes = this.props.classes;
 
         const {styled} = this.props;
@@ -175,7 +175,7 @@ export class InfoDisplay extends Component {
                         <CardContent className={classes.content}>
                             <Typography variant="button"><strong><u>Personal Details:</u></strong></Typography>
                             <p></p>
-                            <Typography variant="button">Omang: {omang}</Typography>
+                            <Typography variant="button">identificationNum: {identificationNum}</Typography>
                             <br/>
                             <Typography variant="button">Gender: {gender}</Typography>
                             <br/>
