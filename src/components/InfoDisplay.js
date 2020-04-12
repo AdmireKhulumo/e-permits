@@ -76,14 +76,14 @@ export class InfoDisplay extends Component {
         this.approve = this.approve.bind(this);
         this.deny = this.deny.bind(this);
         
-    }
+    };
     
-    approve(applicationId) {
+    approve(permitId) {
         
         this.handleCloseApprove();
         //this.setState({openSnack:true});
         //this.handleClickSnack();
-        var docRef=db.collection("applicationInfo").doc(`${applicationId}`);
+        var docRef=db.collection("permits").doc(`${permitId}`);
         return docRef.update({
             status: "Approved"
         })
@@ -98,13 +98,13 @@ export class InfoDisplay extends Component {
         //alert("Application APPROVED");  
     };
     
-    deny(applicationId) {
+    deny(permitId) {
 
         this.handleCloseDeny();
         //this.setState({openSnack:true});
         //this.handleClickSnack();
   
-        var docRef=db.collection("applicationInfo").doc(`${applicationId}`);
+        var docRef=db.collection("permits").doc(`${permitId}`);
         return docRef.update({
             status: "Denied"
         })
@@ -152,7 +152,7 @@ export class InfoDisplay extends Component {
 
 
     render() {
-        const {classes, info:{names,gender,applicationId,phone,dateOfBirth,idNumber,passportNumber, physicalAddress,postalAddress,currentLocation,destination,reason,startDate, startTime,endDate, endTime,status}} 
+        const {classes, info:{fname,sname,gender,permitId,phone,dateOfBirth,omang,nationality,physicalAddress,email,organisation,contactPerson,designation,organisationPhone,location,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
             = this.props; //same as const classes = this.props.classes;
 
         const {styled} = this.props;
@@ -161,36 +161,33 @@ export class InfoDisplay extends Component {
             <Card className={classes.card} varient="outlined" raised="true">
                 
                 <CardContent className={classes.content} varient="outlined">
-                    <Typography variant="h4" color="primary">{names}</Typography>
+                    <Typography variant="h4" color="primary">{sname}: {fname}</Typography>
+                    
                     <div>
-                        <Typography variant="caption">Application ID: <strong>{applicationId}</strong></Typography>
+                        <Typography variant="caption">Application ID: <strong>{permitId}</strong></Typography>
                         <br/>
                         <Typography variant="overline">Application Status: <strong>{status}</strong></Typography>
+                        <br/>
+                        <Typography variant="overline">Permit Type: <strong>{type}</strong></Typography>
                         </div>
                     <p></p>
                     <Card className={classes.card} varient="outlined" raised="true">
                         <CardContent className={classes.content}>
                             <Typography variant="button"><strong><u>Personal Details:</u></strong></Typography>
                             <p></p>
-                            <Typography variant="button">Gender: {gender}</Typography>
+                            <Typography variant="button">Omang: {omang}</Typography>
                             <br/>
-                            <Typography variant="button">ID Number: {idNumber}</Typography>
+                            <Typography variant="button">Gender: {gender}</Typography>
                             <br/>
                             <Typography variant="button">Date Of Birth: {dateOfBirth}</Typography>
                             <br/>
-                            <Typography variant="button">Passport Number: {passportNumber}</Typography>
-                        </CardContent>
-                    </Card>
-
-                    <Card className={classes.card} varient="outlined" raised="true">
-                        <CardContent className={classes.content}>
-                            <Typography variant="button"><strong><u>Contact Details:</u></strong></Typography>
-                            <p></p>
+                            <Typography variant="button">Nationality: {nationality}</Typography>
+                            <br/>
                             <Typography variant="button">Phone Number: {phone}</Typography>
                             <br/>
-                            <Typography variant="button">Physical Address: {physicalAddress}</Typography>
+                            <Typography variant="button">Email: {email}</Typography>
                             <br/>
-                            <Typography variant="button">Postal Address: {postalAddress}</Typography>
+                            <Typography variant="button">Physical Address: {physicalAddress}</Typography>
                         </CardContent>
                     </Card>
         
@@ -198,13 +195,21 @@ export class InfoDisplay extends Component {
                         <CardContent className={classes.content}>
                             <Typography variant="button"><strong><u>Travel Details:</u></strong></Typography>
                             <p></p>
-                            <Typography variant="button">Current Location: {currentLocation}</Typography>
+                            <Typography variant="button">Organisation: {organisation}</Typography>
+                            <br/>
+                            <Typography variant="button">Contact Person: {contactPerson}</Typography>
+                            <br/>
+                            <Typography variant="button">Designation: {designation}</Typography>
+                            <br/>
+                            <Typography variant="button">Mobile Numbers: {organisationPhone}</Typography>
+                            <p></p>
+                            <Typography variant="button">Depature: {location}</Typography>
                             <br/>
                             <Typography variant="button">Destination: {destination}</Typography>
                             <br/>
-                            <Typography variant="button">From: {startDate} , {startTime}hrs </Typography>
+                            <Typography variant="button">From: {startDate}, {startTime} </Typography>
                             <br/>
-                            <Typography variant="button">To: {endDate} , {endTime}hrs </Typography>
+                            <Typography variant="button">To: {endDate} , {endTime} hrs </Typography>
                             <br/>
                             <Typography variant="button">Reasons: {reason}</Typography>
                         </CardContent>
@@ -233,14 +238,14 @@ export class InfoDisplay extends Component {
                                 <DialogTitle id="alert-dialog-title">{"Please Confirm Your Action"}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText id="alert-dialog-description">
-                                        Are you sure you want to <h3><strong>APPROVE</strong></h3> application for <h4><strong>{names}</strong></h4>?
+                                         Are you sure you want to <h3><strong>APPROVE</strong></h3> application for <h4><strong>{sname}: {fname}</strong></h4>?
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={()=>this.handleCloseApprove()} color="primary">
                                         Cancel
                                     </Button>
-                                <Button onClick={()=>this.approve(applicationId)} color="primary" autoFocus>
+                                <Button onClick={()=>this.approve(permitId)} color="primary" autoFocus>
                                         Approve
                                 </Button>
                                 </DialogActions>
@@ -266,14 +271,14 @@ export class InfoDisplay extends Component {
                                 <DialogTitle id="alert-dialog-title">{"Please Confirm Your Action"}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText id="alert-dialog-description">
-                                        Are you sure you want to <h3><strong>DENY</strong></h3> application for <h4><strong>{names}</strong></h4>?
+                                        Are you sure you want to <h3><strong>DENY</strong></h3> application for <h4><strong>{sname}: {fname}</strong></h4>?
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={()=>this.handleCloseDeny()} color="primary">
                                         Cancel
                                     </Button>
-                                <Button onClick={()=>this.deny(applicationId)} color="primary" autoFocus>
+                                <Button onClick={()=>this.deny(permitId)} color="primary" autoFocus>
                                         Deny
                                 </Button>
                                 <div className={classes.root}>

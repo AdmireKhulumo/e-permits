@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import EssentialServices from '../components/essentialServices';
 import Special from '../components/special';
 import Transport from '../components/transport';
+import UsefulData from '../components/usefulData';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -23,7 +24,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box p={4}>{children}</Box>}
     </Typography>
   );
 }
@@ -63,16 +64,20 @@ export default function SimpleTabs() {
           <Tab label="Essential Services" {...a11yProps(0)} />
           <Tab label="Special Permits" {...a11yProps(1)} />
           <Tab label="Transport Services" {...a11yProps(2)} />
+          <Tab label="Useful Data" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <EssentialServices/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Special/>
+      <h1>Special Here</h1>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Transport/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <h1>Useful data here</h1>
       </TabPanel>
     </div>
   );

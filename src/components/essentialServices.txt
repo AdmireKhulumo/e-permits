@@ -53,7 +53,6 @@ export class essentialServices extends Component {
                             applicantId: doc.id
                         });
                         
-                        
                         /*dataItems.push({
                             fname: doc.data().fname,
                             sname: doc.data().sname,
@@ -74,12 +73,9 @@ export class essentialServices extends Component {
                         //console.log(window.fname);
                         //return datas;
                         //return dataItems;
-                        
                     } else {
                         console.log("No such document!");
                     }
-                    console.log(permitId);
-                    return permitId;
                 })
                 .catch(function(error) {
                     console.log("Error getting document:", error);
@@ -106,8 +102,7 @@ export class essentialServices extends Component {
                     status: doc.data().status,
                     fname: doc.data().fname,
                     sname:doc.data().sname
-                }); */ 
-                //getData(permitId);             
+                }); */              
             })
             //console.log(dataItems);
             //return dataItems;
@@ -121,13 +116,12 @@ export class essentialServices extends Component {
         .catch(err=>console.log(err));
 
         console.log(permitIdArray);
-        permitIdArray.map(permitId2=>{
-            console.log("here");
-            console.log(permitId2);
+        permitIdArray.forEach(permitId=>{
             var dataItems = [];
-            db.collection("permits").doc(`${permitId2}`)
+            db.collection("permits").doc(`${permitId}`)
             .get()
-            .then(function(doc) {
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
                     dataItems.push({
                         permitId: doc.id,
                         applicantId:doc.data().applicantId,
@@ -148,6 +142,7 @@ export class essentialServices extends Component {
                         sname: doc.data().sname
                     });
 
+                });
                 console.log(dataItems);
                 return dataItems;
             })
@@ -155,53 +150,11 @@ export class essentialServices extends Component {
                 this.setState({
                     applicationInfo: dataItems
                 })
+    
             })
             .catch(err=>console.log(err));
-        
         });
 
-        console.log(permitIdArray);
-        function getData(permitId){
-            //permitIdArray.forEach(permitId=>{
-                console.log("here");
-                console.log(permitId);
-                var dataItems = [];
-                db.collection("permits").doc(`${permitId}`)
-                .get()
-                .then(function(doc) {
-                        dataItems.push({
-                            permitId: doc.id,
-                            applicantId:doc.data().applicantId,
-                            type: doc.data().type,
-                            organisation: doc.data().organisation,
-                            contactPerson: doc.data().contactPerson,
-                            designation: doc.data().designation,
-                            organisationPhone: doc.data().organisationPhone,
-                            startDate: doc.data().startDate,
-                            endDate: doc.data().endDate,
-                            endTime: doc.data().endTime,
-                            location: doc.data().location,
-                            destination: doc.data().destination,
-                            reason: doc.data().reason,
-                            applyDate: doc.data().applyDate,
-                            status: doc.data().status,
-                            fname: doc.data().fname,
-                            sname: doc.data().sname
-                        });
-    
-                    console.log(dataItems);
-                    return dataItems;
-                })
-                .then(dataItems=>{
-                    this.setState({
-                        applicationInfo: dataItems
-                    })
-                })
-                .catch(err=>console.log(err));
-            
-        };
-        
-        //getData();
         console.log(this.state.applicationInfo);
 
 
