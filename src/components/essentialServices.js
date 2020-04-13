@@ -2,29 +2,32 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {db} from '../firebase';
+import { requirePropFactory } from '@material-ui/core';
 
 //Components
-import InfoDisplay from '../components/InfoDisplay'; 
+//import InfoDisplay from '../components/InfoDisplay';
+const InfoDisplayPromise=import('../components/InfoDisplay');
+const InfoDisplay=React.lazy(()=>(InfoDisplayPromise));
 
 
 export class essentialServices extends Component {
-
+    _isMounted=false;
 
     state={
-        applicationInfo: null //state variable to store query results
+        applicationInfo: null, //state variable to store query results
+        isLoading: true
     } 
 
-    
-
     componentDidMount(){
-
+        this._isMounted=true;
 
         db.collection("permits")
         .where("status", "==", "Pending")
-        .where('type','==','Essential Services')
+        //.where('type','==','Essential Services')
         .limit(5)
         .get()
         .then(function(querySnapshot) {
+            var applicant={};
             var dataItems=[];
             querySnapshot.forEach(function(doc) {
 
@@ -33,9 +36,8 @@ export class essentialServices extends Component {
                 db.collection("applicants").doc(`${applicantId}`).get()
                 .then(function(doc){
 
-                        dataItems.push({
-                            fname: doc.data().fname,
-                            sname: doc.data().sname,
+                        applicant={
+                            fullname: doc.data().fullname,
                             gender: doc.data().gender,
                             identificationNum: doc.data().identificationNum,
                             nationality: doc.data().nationality,
@@ -43,56 +45,75 @@ export class essentialServices extends Component {
                             physicalAddress: doc.data().physicalAddress,
                             email: doc.data().email,
                             phone: doc.data().phone,
-                            applicantId: doc.id
-                        });
-                });
-                console.log(dataItems);
-
-                //Getting The Permit Info Too
-                dataItems.push({
-                    permitId: doc.id,
-                    applicantId:doc.data().applicantId,
-                    type: doc.data().type,
-                    organisation: doc.data().organisation,
-                    contactPerson: doc.data().contactPerson,
-                    designation: doc.data().designation,
-                    organisationPhone: doc.data().organisationPhone,
-                    startDate: doc.data().startDate,
-                    endDate: doc.data().endDate,
-                    endTime: doc.data().endTime,
-                    location: doc.data().location,
-                    destination: doc.data().destination,
-                    reason: doc.data().reason,
-                    applyDate: doc.data().applyDate,
-                    status: doc.data().status,
-                });
+                            applicantId: doc.id,
+                            location: doc.data().location
+                        };
+                        return applicant;
+                })
+                .then(applicant=>{
+                    dataItems.push({
+                        permitId: doc.id,
+                        applicantId:doc.data().applicantId,
+                        type: doc.data().type,
+                        organisation: doc.data().organisation,
+                        contactPerson: doc.data().contactPerson,
+                        contactPersonDesignation: doc.data().contactPersonDesignation,
+                        getContactPersonNum: doc.data().getContactPersonNum,
+                        startDate: doc.data().startDate,
+                        endDate: doc.data().endDate,
+                        endTime: doc.data().endTime,
+                        departureLocation: doc.data().departureLocation,
+                        destination: doc.data().destination,
+                        reason: doc.data().reason,
+                        applyDate: doc.data().applyDate,
+                        status: doc.data().status,
+                        fullname: applicant.fullname,
+                        gender: applicant.gender,
+                        identificationNum: applicant.identificationNum,
+                        nationality: applicant.nationality,
+                        dateOfBirth: applicant.dateOfBirth,
+                        physicalAddress: applicant.physicalAddress,
+                        email: applicant.email,
+                        phone: applicant.phone,
+                    });
+                    return dataItems;
+                })
+                return dataItems;
             });
-            console.log(dataItems);
             return dataItems;
         })
         .then(dataItems=>{
             this.setState({applicationInfo: dataItems});
+            console.log(this.state.applicationInfo);
+            if (this._isMounted){
+                this.setState({isLoading: false})
+            };
         })
         .catch(err=>console.log(err));
     };
-          
+
+    componentWillMount(){
+        this._isMounted = false;
+    };
+    
 
     render() {
 
         //Sending Data to Info Display component
         let completePermitMarkup=this.state.applicationInfo?(
-        this.state.applicationInfo.map((info) => <InfoDisplay key={info.applicantId} info={info}/>)
-        ) : <p>Loading...</p> 
- 
+            this.state.applicationInfo.map(
+                (info) => <InfoDisplay key={info.permitId} info={info}/>)
+            ) : <p>Loading...</p>
+
         return (
             <div>
             <Grid container className="container">
-                <Grid item sm={8} xs={12}>
-                    <div>
-                        <Paper>
-                            {completePermitMarkup} 
-                        </Paper>
-                    </div>
+                <Grid item sm={10} xs={12}>
+                    <React.Suspense fallback={<div>Loading......</div>}>
+                        <div>
+                                {completePermitMarkup} 
+                         </div>
+                    </React.Suspense>
                 </Grid>
             </Grid>     
             </div>

@@ -80,14 +80,14 @@ export class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
           <div className="App">
-
           <Router>
             <Navbar/>
             <div className="container">
               <Switch>
-                <Route exact path="/" render={props =>(
+                {/* <Route exact path="/" render={props =>(
                   <verifyApplications{...props} loggedInstatus={this.state.loggedInstatus}/>
-                )}/>
+                )}/> */}
+                <Route exact path="/" component={verifyApplications}/>
                 <Route exact path="/verifyApplications" component={verifyApplications}/>
                 <Route exact path="/login" component={login}/>
                 <Route exact path="/signup" component={signup}/>
