@@ -80,7 +80,7 @@ const styles={
 
 
 
-export class InfoDisplay extends Component {
+export class InfoDisplaySpecial extends Component {
 
     
     state= {
@@ -252,7 +252,7 @@ export class InfoDisplay extends Component {
     }
 
     render() {
-        const {classes, info:{fullname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,organisation,contactPerson,contactPersonDesignation,getContactPersonNum,location,departureLocation,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
+        const {classes, info:{fullname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,location,departureLocation,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
             = this.props; //same as const classes = this.props.classes;
 
         const {styles} = this.props;
@@ -362,13 +362,13 @@ export class InfoDisplay extends Component {
                                     <TableContainer>
                                             <Table className={classes.table} aria-label='personal details'>
                                                 <TableBody>
-                                                    <TableRow hover='true' >
+                                                   {/* <TableRow hover='true' >
                                                         <TableCell align="left">Organisation::</TableCell>
                                                         <TableCell align="right">{organisation}</TableCell>
                                                     </TableRow>
                                                     <TableRow hover='true'>
                                                         <TableCell align="left">Contact Person:</TableCell>
-                                                        <TableCell align="right">{contactPerson}</TableCell>
+                                                        <TableCell align="right">{gender}</TableCell>
                                                     </TableRow>
                                                     <TableRow hover='true'>
                                                         <TableCell align="left">Designation:</TableCell>
@@ -377,7 +377,7 @@ export class InfoDisplay extends Component {
                                                     <TableRow hover='true'>
                                                         <TableCell align="left">Phone Number:</TableCell>
                                                         <TableCell align="right">{getContactPersonNum}</TableCell>
-                                                    </TableRow>
+        </TableRow> */}
                                                     <TableRow hover='true'>
                                                         <TableCell align="left">Departure:</TableCell>
                                                         <TableCell align="right">{departureLocation}</TableCell>
@@ -508,4 +508,4 @@ export class InfoDisplay extends Component {
     </Card>   
     )
 }}
-export default withStyles(styles)(InfoDisplay);
+export default withStyles(styles)(InfoDisplaySpecial);

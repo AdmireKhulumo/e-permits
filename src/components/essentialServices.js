@@ -23,14 +23,14 @@ export class essentialServices extends Component {
 
         db.collection("permits")
         .where("status", "==", "Pending")
-        //.where('type','==','Essential Services')
+        .where('type','==','Essential Services')
         .limit(5)
         .get()
-        .then(function(querySnapshot) {
+        .then((querySnapshot) =>{
             var applicant={};
             var dataItems=[];
-            querySnapshot.forEach(function(doc) {
-
+            querySnapshot.forEach((doc)=> {
+                console.log(this.state.applicationInfo);
                 //for each permit, get it's applicant's information
                 var applicantId = doc.data().applicantId;
                 db.collection("applicants").doc(`${applicantId}`).get()
@@ -46,14 +46,14 @@ export class essentialServices extends Component {
                             email: doc.data().email,
                             phone: doc.data().phone,
                             applicantId: doc.id,
-                            location: doc.data().location
+                            location:"aa"// doc.data().location
                         };
                         return applicant;
                 })
                 .then(applicant=>{
                     dataItems.push({
                         permitId: doc.id,
-                        applicantId:doc.data().applicantId,
+                        applicantId: doc.data().applicantId,
                         type: doc.data().type,
                         organisation: doc.data().organisation,
                         contactPerson: doc.data().contactPerson,
@@ -78,17 +78,15 @@ export class essentialServices extends Component {
                     });
                     return dataItems;
                 })
-                return dataItems;
+                .then(dataItems=>{
+                    this.setState({applicationInfo: dataItems});
+                    if (this._isMounted){
+                        this.setState({isLoading: false})
+                    };
+                })
             });
-            return dataItems;
         })
-        .then(dataItems=>{
-            this.setState({applicationInfo: dataItems});
-            console.log(this.state.applicationInfo);
-            if (this._isMounted){
-                this.setState({isLoading: false})
-            };
-        })
+
         .catch(err=>console.log(err));
     };
 
@@ -111,7 +109,7 @@ export class essentialServices extends Component {
                 <Grid item sm={10} xs={12}>
                     <React.Suspense fallback={<div>Loading......</div>}>
                         <div>
-                                {completePermitMarkup} 
+                            {completePermitMarkup} 
                          </div>
                     </React.Suspense>
                 </Grid>

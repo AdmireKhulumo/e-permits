@@ -35,7 +35,7 @@ export class userfulData extends Component {
 		db.collection('applicationInfo')
 		.where('destination','==','Palapye').where('status','==','Approved').where('type','==','Essential Services')
 		.get()
-		.then(function(querySnapshot,essential){
+		.then(function(querySnapshot){
 			var size= 0;
 			size=querySnapshot.size;
 			console.log('size: ', size);

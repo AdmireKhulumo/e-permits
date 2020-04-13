@@ -6,14 +6,19 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Special from '../components/special';
-import Transport from '../components/transport';
-import UsefulData from '../components/usefulData';
+
 
 const EssentialServicesPromise=import('../components/essentialServices');
 const EssentialServices=React.lazy(()=>(EssentialServicesPromise));
 
-//import EssentialServices from '../components/essentialServices';
+const TransportPromise=import('../components/transport');
+const Transport=React.lazy(()=>(TransportPromise));
+
+const SpecialPromise=import('../components/special');
+const Special=React.lazy(()=>(SpecialPromise));
+
+const UsefulDataPromise=import('../components/usefulData');
+const UsefulData=React.lazy(()=>(UsefulDataPromise));
 
 
 function TabPanel(props) {
@@ -84,12 +89,12 @@ export default function SimpleTabs() {
       </TabPanel>
       <TabPanel value={value} index={2}>
       <React.Suspense fallback={<div>Loading......</div>}>
-          <h1>Transport</h1>
+          <Transport/>
       </React.Suspense>
       </TabPanel>
       <TabPanel value={value} index={3}>
       <React.Suspense fallback={<div>Loading......</div>}>
-           <h1>Special Permits</h1>
+           <Special/>
       </React.Suspense>
       </TabPanel>
     </div>

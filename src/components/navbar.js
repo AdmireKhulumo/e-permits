@@ -78,6 +78,8 @@ export default function MenuAppBar(props) {
                     <strong>Botswana Covid-19 E-Permit System</strong>
                 </Typography>
 
+                {/*<img src={'./logo'} alt='logo'></img>*/}
+
                 {auth && (
                     <div>
                     <IconButton
