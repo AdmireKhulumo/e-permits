@@ -146,7 +146,7 @@ export class InfoDisplaySpecial extends Component {
         })
         .then(function(){
             console.log("Approve Successfully Updated");
-            //window.location.reload();
+            window.location.reload();
         })
         .catch(function(error){
             console.error("Error updating document: ", error);

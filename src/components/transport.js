@@ -24,7 +24,7 @@ export class transport extends Component {
         db.collection("permits")
         .where("status", "==", "Pending")
         .where('type','==','Transport of Essential Goods')
-        .limit(5)
+        .limit(10)
         .get()
         .then((querySnapshot) =>{
             var applicant={};

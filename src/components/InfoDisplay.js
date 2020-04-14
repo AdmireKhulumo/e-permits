@@ -363,7 +363,7 @@ export class InfoDisplay extends Component {
                                             <Table className={classes.table} aria-label='personal details'>
                                                 <TableBody>
                                                     <TableRow hover='true' >
-                                                        <TableCell align="left">Organisation::</TableCell>
+                                                        <TableCell align="left">Organisation:</TableCell>
                                                         <TableCell align="right">{organisation}</TableCell>
                                                     </TableRow>
                                                     <TableRow hover='true'>

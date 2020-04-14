@@ -39,7 +39,11 @@ export class userfulData extends Component {
 
 
 	state = {
-		esssential: null
+		esssential: null,
+		special:null,
+		transport: null,
+		dataBw:[],
+		totalBw: null,
 	};
 
 
@@ -47,22 +51,52 @@ export class userfulData extends Component {
 		super(props);
 	};
 	
-	componentDidMount(){
-		db.collection('applicationInfo')
-		.where('destination','==','Palapye').where('status','==','Approved').where('type','==','Essential Services')
-		.get()
-		.then(function(querySnapshot){
-			var size= 0;
-			size=querySnapshot.size;
-			console.log('size: ', size);
-			return size;
-		})     
-		.then(size=>{
-			this.setState({essential: size});
-			console.log(this.state.essential);
-		});
-	};
 
+	componentDidMount(){
+		//var essential,transport,special;
+		db.collection('permits')
+		.where('status','==','Approved').where('type','==','Essential Services')
+		.get()
+		.then((querySnapshot) =>{
+			var size0 = querySnapshot.size;
+			console.log(size0);
+			console.log(querySnapshot);
+			return size0;
+		})     
+		.then((size0)=>{
+			this.setState({essential: size0});
+		});
+
+		db.collection('permits')
+		.where('status','==','Approved').where('type','==','Transport Of Essential Goods')
+		.get()
+		.then((querySnapshot) =>{
+			var size1 = querySnapshot.size;
+			console.log(size1);
+			console.log(querySnapshot);
+			return size1;
+		})
+		.then((size1)=>{
+			this.setState({transport: size1});
+		});
+				
+		db.collection('permits')
+		.where('status','==','Approved').where('type','==','Special Permit')
+		.get()
+		.then((querySnapshot) =>{
+				var size2=querySnapshot.size;
+				console.log(size2);
+				console.log(querySnapshot);
+				return size2;
+		})
+		.then((size2)=>{
+			this.setState({special:size2});
+			this.setState({dataBw: [this.state.essential, this.state.transport, this.state.special]});
+			this.setState({totalBw: (this.state.essential + this.state.transport + this.state.special)});
+			console.log(this.state.esssential);
+		});
+
+	};
 	
 
 	
@@ -70,6 +104,31 @@ export class userfulData extends Component {
 
 
 		const classes=this.props.classes;
+
+		//for Botswana
+		const dataBw = {
+			labels: [
+				'Essential Services',
+				'Transport of Goods',
+				'Special Permits'
+			],
+			datasets: [{
+				data: [250,86,33],
+				backgroundColor: [
+				'#FF6384',
+				'#36A2EB',
+				'#FFCE56'
+				],
+				hoverBackgroundColor: [
+				'#FF6384',
+				'#36A2EB',
+				'#FFCE56'
+				],
+				weight: 20,
+				hoverBorderWidth: 10,
+				hoverBorderColor: '#ffffff'
+			}]
+		};
 
 		//for palapye
 		const data = {
@@ -79,7 +138,7 @@ export class userfulData extends Component {
 				'Special Permits'
 			],
 			datasets: [{
-				data: [75, 23, 10],
+				data: [10,4,2],
 				backgroundColor: [
 				'#FF6384',
 				'#36A2EB',
@@ -95,37 +154,11 @@ export class userfulData extends Component {
 				hoverBorderColor: '#ffffff'
 			}]
 		};
-
-		//for Botswana
-		const dataBots = {
-			labels: [
-				'Essential Services',
-				'Transport of Goods',
-				'Special Permits'
-			],
-			datasets: [{
-				data: [440, 300, 70],
-				backgroundColor: [
-				'#FF6384',
-				'#36A2EB',
-				'#FFCE56'
-				],
-				hoverBackgroundColor: [
-				'#FF6384',
-				'#36A2EB',
-				'#FFCE56'
-				],
-				weight: 20,
-				hoverBorderWidth: 10,
-				hoverBorderColor: '#ffffff'
-			}]
-		};
-
 
         return (
 			<div>
 			<Card className={classes.card} varient="outlined" raised={true}>
-				<Typography variant='h5' color='primary'><u>Botswana Approved Permit Types</u></Typography>
+				<Typography variant='h5' color='primary'><u>Botswana Active Permit Types</u></Typography>
 				<Grid container spacing={1}>
 					<Grid item xs={4} className={classes.table}>
 						<Table size='medium' className={classes.table}>
@@ -135,41 +168,41 @@ export class userfulData extends Component {
 								<TableCell align="left">
 									<Typography variant="overline">Essential Services</Typography>
 								</TableCell>
-								<TableCell align="right">440</TableCell>
+								<TableCell align="right">250</TableCell>
 							</TableRow>
 
 							<TableRow hover='true' >
 								<TableCell align="left">
 									<Typography variant="overline">Transport of Goods</Typography>
 								</TableCell>
-								<TableCell align="right">300</TableCell>
+								<TableCell align="right">86</TableCell>
 							</TableRow>
 
 							<TableRow hover='true' >
 								<TableCell align="left">
 										<Typography variant="overline">Special Permits</Typography>
 								</TableCell>
-								<TableCell align="right">70</TableCell>
+								<TableCell align="right">33</TableCell>
 							</TableRow>
 
 							<TableRow hover='true' >
 								<TableCell align="left">
 										<Typography variant="overline"><strong>Total</strong></Typography>
 								</TableCell>
-								<TableCell align="right"><strong>810</strong></TableCell>
+								<TableCell align="right"><strong>369</strong></TableCell>
 							</TableRow>
 						</TableBody>
 						</Table>
 						
 					</Grid>
 					<Grid item xs={8}>
-						<Doughnut data={dataBots} />
+						<Doughnut data={dataBw} />
 					</Grid>
 				</Grid>
 			</Card>
 
 			<Card className={classes.card} varient="outlined" raised={true}>
-				<Typography variant='h5' color='primary'><u>Palapye Approved Permit Types</u></Typography>
+				<Typography variant='h5' color='primary'><u>Palapye Active Permit Types</u></Typography>
 				<Grid container spacing={1}>
 
 					<Grid item xs={8}>

@@ -24,7 +24,7 @@ export class special extends Component {
         db.collection("permits")
         .where("status", "==", "Pending")
         .where('type','==','Special Permit')
-        .limit(5)
+        .limit(10)
         .get()
         .then((querySnapshot) =>{
             var applicant={};
