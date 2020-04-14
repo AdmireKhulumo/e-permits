@@ -93,7 +93,7 @@ const App =()=>{
                   <verifyApplications{...props} loggedInstatus={this.state.loggedInstatus}/>
                 )}/> */}
                 <PrivateRoute exact path="/" component={verifyApplications}/>
-                <PrivateRoute exact path="/verifyApplications" component={verifyApplications}/>
+                <PrivateRoute exact path="/verifyApplications/" component={verifyApplications}/>
                 <Route exact path="/login" component={login}/>
               
               {/*</Switch>*/}

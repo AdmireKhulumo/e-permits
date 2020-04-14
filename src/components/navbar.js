@@ -88,9 +88,18 @@ export default function MenuAppBar(props) {
                 </IconButton>
               </LightTooltip>
 
-                <Typography variant="button" className={classes.title} href="./" >
-                    <strong>Botswana Covid-19 E-Permit System</strong>
-                </Typography>
+                
+
+                <div style={{ 
+                    float       : 'none', 
+                    width       : '300px',
+                    marginLeft  : 'auto',
+                    marginRight : 'auto'
+                }}>
+                    <Typography variant="button" className={classes.title} href="./" >
+                       <strong>Botswana Covid-19 E-Permit System</strong>
+                    </Typography>
+                </div>
 
                 {/*<img src={'./logo'} alt='logo'></img>*/}
 

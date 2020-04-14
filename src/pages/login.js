@@ -53,10 +53,7 @@ function Copyright() {
 
 
 //default export stuff
-const Login = ({ history }) => {
-    this.state={
-        verifierEmail:''
-    };
+const Login = ({ history}) => {
 
     const handleLogin = useCallback(
       async event => {
@@ -66,7 +63,6 @@ const Login = ({ history }) => {
           await firebaseApp
             .auth()
             .signInWithEmailAndPassword(email.value, password.value);
-            this.setState({verifierEmail: email.vale});
             history.push("/");
  
         } catch (error) {
@@ -139,11 +135,6 @@ const Login = ({ history }) => {
                 Forgot password?
               </Link>
             </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
           </Grid>
         </form>
       </div>
@@ -155,6 +146,5 @@ const Login = ({ history }) => {
     );
   };
 
-  var email=this.state.verifierEmail;
-  export {email};
+
   export default withRouter(Login);
