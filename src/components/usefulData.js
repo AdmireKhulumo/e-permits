@@ -6,6 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 
 //console.log("essential: ", essential);
@@ -16,6 +22,16 @@ const styles={
         alignItems:'center',
 		justifyContent:'center',*/
 		margin: '0px auto 20px auto',
+	},
+	content:{
+		padding: 25,
+		margin: 'auto auto auto auto',
+	},
+	table:{
+		
+		margin: 'auto 0px auto auto',
+		
+
 	}
 };
 
@@ -30,7 +46,7 @@ export class userfulData extends Component {
 	constructor(props) {
 		super(props);
 	};
-
+	
 	componentDidMount(){
 		db.collection('applicationInfo')
 		.where('destination','==','Palapye').where('status','==','Approved').where('type','==','Essential Services')
@@ -43,11 +59,14 @@ export class userfulData extends Component {
 		})     
 		.then(size=>{
 			this.setState({essential: size});
+			console.log(this.state.essential);
 		});
 	};
 
 	
-    render() {
+
+	
+    render(props) {
 
 
 		const classes=this.props.classes;
@@ -60,7 +79,7 @@ export class userfulData extends Component {
 				'Special Permits'
 			],
 			datasets: [{
-				data: [300, 50, 100],
+				data: [75, 23, 10],
 				backgroundColor: [
 				'#FF6384',
 				'#36A2EB',
@@ -104,22 +123,99 @@ export class userfulData extends Component {
 
 
         return (
-				<div>
-					<Card className={classes.card} varient="outlined" raised={true}>
-						<Paper>
-							<Typography variant='button' color='primary'><h3>Palapye Approved Permit Types</h3></Typography>
-							<Doughnut data={data} />
-						</Paper>
-					</Card>
+			<div>
+			<Card className={classes.card} varient="outlined" raised={true}>
+				<Typography variant='h5' color='primary'><u>Botswana Approved Permit Types</u></Typography>
+				<Grid container spacing={1}>
+					<Grid item xs={4} className={classes.table}>
+						<Table size='medium' className={classes.table}>
+						<TableBody>
 
-					<Card className={classes.card} varient="outlined" raised={true}>
-						<Paper>
-							<Typography variant='button' color='primary'><h3>Botswana Approved Permit Types</h3></Typography>
-							<Doughnut data={dataBots} />
-						</Paper>
-					</Card>
-				</div>
-                
+							<TableRow hover='true' padding="10px">
+								<TableCell align="left">
+									<Typography variant="overline">Essential Services</Typography>
+								</TableCell>
+								<TableCell align="right">440</TableCell>
+							</TableRow>
+
+							<TableRow hover='true' >
+								<TableCell align="left">
+									<Typography variant="overline">Transport of Goods</Typography>
+								</TableCell>
+								<TableCell align="right">300</TableCell>
+							</TableRow>
+
+							<TableRow hover='true' >
+								<TableCell align="left">
+										<Typography variant="overline">Special Permits</Typography>
+								</TableCell>
+								<TableCell align="right">70</TableCell>
+							</TableRow>
+
+							<TableRow hover='true' >
+								<TableCell align="left">
+										<Typography variant="overline"><strong>Total</strong></Typography>
+								</TableCell>
+								<TableCell align="right"><strong>810</strong></TableCell>
+							</TableRow>
+						</TableBody>
+						</Table>
+						
+					</Grid>
+					<Grid item xs={8}>
+						<Doughnut data={dataBots} />
+					</Grid>
+				</Grid>
+			</Card>
+
+			<Card className={classes.card} varient="outlined" raised={true}>
+				<Typography variant='h5' color='primary'><u>Palapye Approved Permit Types</u></Typography>
+				<Grid container spacing={1}>
+
+					<Grid item xs={8}>
+						<Doughnut data={data} />
+					</Grid>
+
+					<Grid item xs={4} className={classes.table}>
+						<Table size='medium' className={classes.table}>
+							<TableBody>
+
+								<TableRow hover='true' padding="10px">
+									<TableCell align="left">
+										<Typography variant="overline">Essential Services</Typography>
+									</TableCell>
+									<TableCell align="right">76</TableCell>
+								</TableRow>
+
+								<TableRow hover='true' >
+									<TableCell align="left">
+										<Typography variant="overline">Transport of Goods</Typography>
+									</TableCell>
+									<TableCell align="right">50</TableCell>
+								</TableRow>
+
+								<TableRow hover='true' >
+									<TableCell align="left">
+										 <Typography variant="overline">Special Permits</Typography>
+									</TableCell>
+									<TableCell align="right">10</TableCell>
+								</TableRow>
+
+								<TableRow hover='true' >
+									<TableCell align="left">
+										 <Typography variant="overline"><strong>Total</strong></Typography>
+									</TableCell>
+									<TableCell align="right"><strong>108</strong></TableCell>
+								</TableRow>
+
+							</TableBody>
+						</Table>
+					</Grid>
+
+				</Grid>
+			</Card>
+			</div>
+               
         );
     }
 }

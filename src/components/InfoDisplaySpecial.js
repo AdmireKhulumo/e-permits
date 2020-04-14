@@ -362,22 +362,7 @@ export class InfoDisplaySpecial extends Component {
                                     <TableContainer>
                                             <Table className={classes.table} aria-label='personal details'>
                                                 <TableBody>
-                                                   {/* <TableRow hover='true' >
-                                                        <TableCell align="left">Organisation::</TableCell>
-                                                        <TableCell align="right">{organisation}</TableCell>
-                                                    </TableRow>
-                                                    <TableRow hover='true'>
-                                                        <TableCell align="left">Contact Person:</TableCell>
-                                                        <TableCell align="right">{gender}</TableCell>
-                                                    </TableRow>
-                                                    <TableRow hover='true'>
-                                                        <TableCell align="left">Designation:</TableCell>
-                                                        <TableCell align="right">{contactPersonDesignation}</TableCell>
-                                                    </TableRow>
-                                                    <TableRow hover='true'>
-                                                        <TableCell align="left">Phone Number:</TableCell>
-                                                        <TableCell align="right">{getContactPersonNum}</TableCell>
-        </TableRow> */}
+
                                                     <TableRow hover='true'>
                                                         <TableCell align="left">Departure:</TableCell>
                                                         <TableCell align="right">{departureLocation}</TableCell>

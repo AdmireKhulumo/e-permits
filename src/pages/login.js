@@ -1,175 +1,160 @@
-import React, { Component } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import PropTypes from 'prop-types';
-import {Link, useHistory} from 'react-router-dom';
-import {db, firebaseApp} from "../firebase";
-import { withRouter } from "react-router-dom";
-
-
-
-//MUI stuff
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import React, { useCallback, useContext } from "react";
+import { withRouter, Redirect } from "react-router";
+import {firebaseApp}from "../firebase";
+import { AuthContext } from "../Auth";
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+//MUI design stuff
+function Copyright() {
+    return (
+      <Typography variant="caption" color="textSecondary" align="center">
+        {'made with ❤️ from '}
+        <Link color="inherit" href="https://www.biust.ac.bw/">
+          BIUST
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+  
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
 
 
-const styles={
-    form:{
-        textAlign: 'center'
-    },
-    image:{
-        margin: '20px auto 20px auto'
-    },
-    pageTitle:{
-        margin: '15px auto 15px auto'
-    },
-    textField:{
-        margin:'15px auto 15px auto'
-    },
-    button:
-    {
-        marginTop: 20,
-        position: 'reletive',
-        margin:15
-    },
-    customError:{
-        color:'red',
-        fontSize:'0.8rem',
-        marginTop: '10'
-    },
-    progress:{
-        position: 'absolute'
-    }
-};
 
+//default export stuff
+const Login = ({ history }) => {
+    this.state={
+        verifierEmail:''
+    };
 
-export class login extends Component {
-
-    constructor(props){
-        super(props);
-        this.handleSubmit=this.handleSubmit.bind(this);
-        this.handleChange=this.handleChange.bind(this);
-        this.state={
-            email:'',
-            password: '',
-            
-        }
-    }
-
-    handleSubmit=(event)=>{
+    const handleLogin = useCallback(
+      async event => {
         event.preventDefault();
-        this.setState({
-            loading:true
-        });
-        const userData={
-            email:this.state.email,
-            password:this.state.password
+        const { email, password } = event.target.elements;
+        try {
+          await firebaseApp
+            .auth()
+            .signInWithEmailAndPassword(email.value, password.value);
+            this.setState({verifierEmail: email.vale});
+            history.push("/");
+ 
+        } catch (error) {
+          alert(error);
         }
-        firebaseApp.auth().signInWithEmailAndPassword(userData.email,userData.password).then((u)=>{
-            console.log(u);
-            if(u.data.status === "signeIn")
-            {
-                this.props.handleSuccessfulAuth(u.data);
-            }
-            
-        }).catch((err)=>{
-            console.log(err)
-        })
-        
-        
+      },
+      [history]
+    );
+  
+    const { currentUser } = useContext(AuthContext);
+    const classes = useStyles();
+  
+    if (currentUser) {
+      return <Redirect to="/" />;
     }
+  
+    return (
+      <div>
+    <Container component="main" maxWidth="xs" backgroundColor='#ffffff'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <img alt='Botswana coat of arms' width='100px' height='100px' src={"https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Coat_of_arms_of_Botswana.svg/1200px-Coat_of_arms_of_Botswana.svg.png"} ></img>
 
-    handleChange=(event)=>{
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
 
-    render() {
-
-        const{classes}=this.props;
-        const{errors,loading}=this.state;
-
-        return (
-            <Grid container className={classes.form}>
-                <Grid item sm/>
-                <Grid item sm>
-                    <Typography 
-                    variant='h2' 
-                    className={classes.pageTitle}
-                    disabled={loading}>
-                        Login
-                        
-                    </Typography>
-                    <form noValidate onSubmit={this.handleSubmit}>
-                        <TextField 
-                        id="email" 
-                        name="email" 
-                        type="email" 
-                        label="Email" 
-                        className={classes.textField}
-                        //helperText={errors.email}
-                        //error={errors.email ? true : false}
-                        value={this.state.email} 
-                        onChange={this.handleChange} 
-                        fullWidth/>
-
-                        <TextField 
-                        id="password" 
-                        name="password" 
-                        type="password" 
-                        label="Password" 
-                        className={classes.textField}
-                        //helperText={errors.password}
-                        //error={errors.password ? true : false}
-                        value={this.state.password} 
-                        onChange={this.handleChange} 
-                        fullWidth/>
-
-                        {/*{errors.general && (
-                            <Typography 
-                            variant="body2"
-                            className={classes.customError}>
-                                {errors.general}
-                            </Typography>
-                        )}*/}
-
-                        <Button 
-                        type="submit" 
-                        variant="contained" 
-                        color="primary" 
-                        className={classes.button}>
-                            Login
-                            {
-                            loading &&(
-                                <CircularProgress 
-                                size={30}
-                                className={classes.progress}/>
-                            )
-                        }
-                        </Button>
-                        <br></br>
-
-                        {/*<small>
-                            If you don have an account 
-                            <br></br>
-                            <Link to="/signup">
-                                Register Here
-                            </Link>
-
-                        </small>*/}
-                    </form>
-                </Grid>
-                <Grid item sm/>
+        <form className={classes.form} noValidate onSubmit={handleLogin}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
             </Grid>
-        );
-    }
-}
+            <Grid item>
+              <Link href="#" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
+      </div>
+    );
+  };
 
-login.propTypes ={
-    classes: PropTypes.object.isRequired
-}
-
-export default withRouter(login)
+  var email=this.state.verifierEmail;
+  export {email};
+  export default withRouter(Login);

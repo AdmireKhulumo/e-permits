@@ -146,7 +146,7 @@ export class InfoDisplay extends Component {
         })
         .then(function(){
             console.log("Approve Successfully Updated");
-            //window.location.reload();
+            window.location.reload();
         })
         .catch(function(error){
             console.error("Error updating document: ", error);
@@ -252,7 +252,7 @@ export class InfoDisplay extends Component {
     }
 
     render() {
-        const {classes, info:{fullname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,organisation,contactPerson,contactPersonDesignation,getContactPersonNum,location,departureLocation,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
+        const {classes, info:{fullname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,organisation,contactPerson,contactPersonDesignation,contactPersonNum,location,departureLocation,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
             = this.props; //same as const classes = this.props.classes;
 
         const {styles} = this.props;
@@ -376,7 +376,7 @@ export class InfoDisplay extends Component {
                                                     </TableRow>
                                                     <TableRow hover='true'>
                                                         <TableCell align="left">Phone Number:</TableCell>
-                                                        <TableCell align="right">{getContactPersonNum}</TableCell>
+                                                        <TableCell align="right">{contactPersonNum}</TableCell>
                                                     </TableRow>
                                                     <TableRow hover='true'>
                                                         <TableCell align="left">Departure:</TableCell>

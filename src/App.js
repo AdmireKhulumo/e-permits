@@ -5,16 +5,17 @@ import {MuiThemeProvider} from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import jwtDecode from 'jwt-decode';
 import { withRouter } from "react-router-dom";
+import { AuthProvider } from "./Auth";
+import PrivateRoute from "./PrivateRoute";
 
 //Components
 import Navbar from './components/navbar'
 
 //Pages
 import login from './pages/login'
-import signup from './pages/signup'
 import verifyApplications from './pages/verifyApplications'
 import { render } from '@testing-library/react';
-import AuthRoute from './AuthRoute';
+import AuthRoute from './AuthRouteNims';
 import {db, firebaseApp} from './firebase';
 
 const theme = createMuiTheme({
@@ -38,7 +39,8 @@ const theme = createMuiTheme({
   
 });
 
-let authenticated;
+//Nims
+/*let authenticated;
 const token = localStorage.FBIdToken;
 if(token){
   const decodeToken = jwtDecode(token);
@@ -48,11 +50,13 @@ if(token){
   }else{
     authenticated=true;
   }
-}
+}*/
 
-export class App extends Component {
 
-  constructor()
+
+
+  //Nims
+ /* constructor()
   {
     super();
       this.state = {
@@ -74,30 +78,31 @@ export class App extends Component {
         this.setState({user : null})
       }
     })
-  }
-
-  render() {
+  }*/
+const App =()=>{
     return (
       <MuiThemeProvider theme={theme}>
           <div className="App">
+
+         <AuthProvider>
           <Router>
             <Navbar/>
             <div className="container">
-              <Switch>
-                {/* <Route exact path="/" render={props =>(
+              {/* <Switch>
+                <Route exact path="/" render={props =>(
                   <verifyApplications{...props} loggedInstatus={this.state.loggedInstatus}/>
                 )}/> */}
-                <Route exact path="/" component={verifyApplications}/>
-                <Route exact path="/verifyApplications" component={verifyApplications}/>
+                <PrivateRoute exact path="/" component={verifyApplications}/>
+                <PrivateRoute exact path="/verifyApplications" component={verifyApplications}/>
                 <Route exact path="/login" component={login}/>
-                <Route exact path="/signup" component={signup}/>
-              </Switch>
+              
+              {/*</Switch>*/}
             </div>
           </Router>
+        </AuthProvider>
         </div>
         </MuiThemeProvider>
     );
-  }
-}
+  };
 
 export default App;

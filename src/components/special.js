@@ -75,6 +75,7 @@ export class special extends Component {
                         physicalAddress: applicant.physicalAddress,
                         email: applicant.email,
                         phone: applicant.phone,
+                        location: applicant.location
                     });
                     return dataItems;
                 })

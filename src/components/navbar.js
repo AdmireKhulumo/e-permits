@@ -19,6 +19,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Tooltip from '@material-ui/core/Tooltip';
+import { withStyles} from '@material-ui/core/styles';
+import {firebaseApp} from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
+
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}))(Tooltip);
 
 function ElevationScroll(props) {
     const { children, window } = props;
@@ -70,9 +82,11 @@ export default function MenuAppBar(props) {
       <ElevationScroll {...props}>
         <AppBar >
             <Toolbar>
+              <LightTooltip title="HOME" arrow>
                 <IconButton edge="start" component={Link} to="/verifyApplications" className={classes.menuButton} color="inherit" aria-label="home">
                     <HomeIcon/>
                 </IconButton>
+              </LightTooltip>
 
                 <Typography variant="button" className={classes.title} href="./" >
                     <strong>Botswana Covid-19 E-Permit System</strong>
@@ -82,22 +96,32 @@ export default function MenuAppBar(props) {
 
                 {auth && (
                     <div>
+                      <LightTooltip title="ACCOUNT" arrow>
                     <IconButton
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         //onClick={handleMenu}
                         color="inherit"
+                        
                     >
                         <AccountCircle />
                     </IconButton>
+                    </LightTooltip>
                     </div>
                 )}
                 
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="home">
-                        <SignOutIcon/>
+                <LightTooltip title="SIGN OUT" arrow>
+                <IconButton
+                   edge="start" 
+                   className={classes.menuButton} 
+                   color="inherit" 
+                   aria-label="home"
+                   onClick={()=>firebaseApp.auth().signOut()}
+                   >
+                  <SignOutIcon/>
                 </IconButton>
-
+                </LightTooltip>
             </Toolbar>
         </AppBar>
       </ElevationScroll>

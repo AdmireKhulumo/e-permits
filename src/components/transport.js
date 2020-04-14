@@ -23,7 +23,7 @@ export class transport extends Component {
 
         db.collection("permits")
         .where("status", "==", "Pending")
-        .where('type','==','Transsport of Essential Goods')
+        .where('type','==','Transport of Essential Goods')
         .limit(5)
         .get()
         .then((querySnapshot) =>{
@@ -46,7 +46,7 @@ export class transport extends Component {
                             email: doc.data().email,
                             phone: doc.data().phone,
                             applicantId: doc.id,
-                            location:"aa"// doc.data().location
+                            location: doc.data().location
                         };
                         return applicant;
                 })
@@ -58,7 +58,7 @@ export class transport extends Component {
                         organisation: doc.data().organisation,
                         contactPerson: doc.data().contactPerson,
                         contactPersonDesignation: doc.data().contactPersonDesignation,
-                        getContactPersonNum: doc.data().getContactPersonNum,
+                        contactPersonNum: doc.data().contactPersonNum,
                         startDate: doc.data().startDate,
                         endDate: doc.data().endDate,
                         endTime: doc.data().endTime,
@@ -75,6 +75,7 @@ export class transport extends Component {
                         physicalAddress: applicant.physicalAddress,
                         email: applicant.email,
                         phone: applicant.phone,
+                        location: applicant.location
                     });
                     return dataItems;
                 })
