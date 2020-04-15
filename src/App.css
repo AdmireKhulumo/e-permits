@@ -571,10 +571,7 @@ div {
   padding: 0;
   z-index: 0;
 }
-input[Attributes Style] {
-  unicode-bidi: -webkit-isolate;
-}
-user agent stylesheet
+
 input {
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;

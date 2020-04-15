@@ -13,6 +13,7 @@ import Navbar from './components/navbar'
 
 //Pages
 import login from './pages/login'
+import forgotPassword from './pages/forgotPassword'
 import verifyApplications from './pages/verifyApplications'
 import { render } from '@testing-library/react';
 import AuthRoute from './AuthRouteNims';
@@ -27,7 +28,7 @@ const theme = createMuiTheme({
         contrastText:'#ffff'
       },
       secondary: {
-        main: '#00e5ff',
+        main: '#ff2474',
         light:'#33eaff',
         dark:'#00a0b2',
         contrastText:'#ffff' 
@@ -95,6 +96,7 @@ const App =()=>{
                 <PrivateRoute exact path="/" component={verifyApplications}/>
                 <PrivateRoute exact path="/verifyApplications/" component={verifyApplications}/>
                 <Route exact path="/login" component={login}/>
+                <Route exact path="/forgotPassword" component={forgotPassword}/>
               
               {/*</Switch>*/}
             </div>

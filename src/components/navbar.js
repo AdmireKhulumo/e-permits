@@ -19,6 +19,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import HomeIcon from '@material-ui/icons/Home';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles} from '@material-ui/core/styles';
 import {firebaseApp} from '../firebase';
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    align:"center"
   },
 }));
 
@@ -75,6 +77,10 @@ export default function MenuAppBar(props) {
     setAnchorEl(null);
   };
 
+  function handleRefresh() {
+    window.location.reload(false);
+  };
+
   return (
     <div className={classes.root}>
     <React.Fragment>
@@ -82,9 +88,9 @@ export default function MenuAppBar(props) {
       <ElevationScroll {...props}>
         <AppBar >
             <Toolbar>
-              <LightTooltip title="HOME" arrow>
-                <IconButton edge="start" component={Link} to="/verifyApplications" className={classes.menuButton} color="inherit" aria-label="home">
-                    <HomeIcon/>
+              <LightTooltip title="REFRESH" arrow>
+                <IconButton edge="start" onClick={handleRefresh} className={classes.menuButton} color="inherit" aria-label="home">
+                    <RefreshIcon/>
                 </IconButton>
               </LightTooltip>
 
@@ -92,11 +98,10 @@ export default function MenuAppBar(props) {
 
                 <div style={{ 
                     float       : 'none', 
-                    width       : '300px',
                     marginLeft  : 'auto',
                     marginRight : 'auto'
-                }}>
-                    <Typography variant="button" className={classes.title} href="./" >
+                }} centered>
+                    <Typography variant="h5" className={classes.title} href="./" >
                        <strong>Botswana Covid-19 E-Permit System</strong>
                     </Typography>
                 </div>

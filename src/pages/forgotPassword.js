@@ -53,31 +53,38 @@ function Copyright() {
 
 
 //default export stuff
-const Login = ({ history}) => {
+const ForgotPassword = ({ history}) => {
 
-    const handleLogin = useCallback(
+    const handleForgotPassword = useCallback(
       async event => {
         event.preventDefault();
-        const { email, password } = event.target.elements;
-        try {
-          await firebaseApp
-            .auth()
-            .signInWithEmailAndPassword(email.value, password.value);
-            history.push("/");
- 
-        } catch (error) {
-          alert(error);
+        const { email } = event.target.elements;
+        if (email.value==""){
+            window.alert("Please enter your email.")
         }
+        else{
+            try {
+                await firebaseApp
+                  .auth()
+                  .sendPasswordResetEmail(email.value);
+                  window.alert("Done! Please check your email inbox for the email reset link.")
+                  history.push("/login");
+       
+              } catch (error) {
+                alert(error);
+              }
+        }
+        
       },
       [history]
     );
   
-    const { currentUser } = useContext(AuthContext);
+    //const { currentUser } = useContext(AuthContext);
     const classes = useStyles();
   
-    if (currentUser) {
-      return <Redirect to="/" />;
-    }
+    //if (currentUser) {
+    //  return <Redirect to="/" />;
+    //}
   
     return (
       <div>
@@ -90,10 +97,13 @@ const Login = ({ history}) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Forgot Password
         </Typography>
-
-        <form className={classes.form} noValidate onSubmit={handleLogin}>
+        <p></p>
+        <Typography variant="caption">
+            Please enter your login email below then press 'Reset Password.' A reset email link will be sent to your email inbox. Use it to change your password.
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleForgotPassword}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -105,21 +115,6 @@ const Login = ({ history}) => {
             autoComplete="email"
             autoFocus
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -127,15 +122,8 @@ const Login = ({ history}) => {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Reset Password
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/forgotPassword" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={8}>
@@ -147,4 +135,4 @@ const Login = ({ history}) => {
   };
 
 
-  export default withRouter(Login);
+  export default withRouter(ForgotPassword);
