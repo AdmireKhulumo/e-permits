@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles'; //import higher order styles component
 import {db} from '../firebase';
 import { alert } from 'react-alert';
-import Snackbar from '@material-ui/core/Snackbar';
-import Input from '@material-ui/core/Input';
-
 
 //MUI imports
 import Card from '@material-ui/core/Card';
@@ -88,8 +85,6 @@ export class InfoDisplaySpecial extends Component {
         setOpenDeny: false,
         openApprove: false,
         setOpenApprove: false,
-        openSnack: false,
-        setOpenSnack: false,
         moreDetails: false,
         setMoreDetails: false,
         openList1:false,
@@ -102,17 +97,25 @@ export class InfoDisplaySpecial extends Component {
     //comment section in deny button
 
    //for buttons
-    constructor(props) {
-        super(props);
-        this.approve = this.approve.bind(this);
-       this.deny = this.deny.bind(this);       
+   constructor(props) {
+    super(props);
+    this.approve = this.approve.bind(this);
+    this.deny = this.deny.bind(this);
+    this.toggleShowApproved =this.toggleShowApproved.bind(this);
+    this.toggleShowDenied =this.toggleShowDenied.bind(this);  
+    this.state={
+        ShowApproved: false,
+        showDenied: false,
+        cardStatus: "Pending",
     };
-    
+    };
+
+
     approve(permitId) {
         
         this.handleCloseApprove();
-        //this.setState({openSnack:true});
-        //this.handleClickSnack();
+        this.toggleShowApproved();
+        this.setState({cardStatus: "Approved"});
         var verifierDetails={};
         var verifierEmail="masego.r@gmail.com";
         db.collection("verifiers").doc(`${verifierEmail}`)
@@ -146,20 +149,17 @@ export class InfoDisplaySpecial extends Component {
         })
         .then(function(){
             console.log("Approve Successfully Updated");
-            window.location.reload();
         })
         .catch(function(error){
             console.error("Error updating document: ", error);
         });
-  
-        //alert("Application APPROVED");  
     };
     
     deny(permitId) {
 
         this.handleCloseDeny();
-        //this.setState({openSnack:true});
-        //this.handleClickSnack();
+        this.toggleShowDenied();
+        this.setState({cardStatus: "Denied"});
         var verifierDetails={};
         var verifierEmail="masego.r@gmail.com";
         db.collection("verifiers").doc(`${verifierEmail}`)
@@ -194,8 +194,6 @@ export class InfoDisplaySpecial extends Component {
         })
         .then(function(){
             console.log("Deny Successfully Updated");
-            window.location.reload();
-            //this.handleClickSnack();
         })
         .catch(function(error){
             console.error("Error updating document: ", error);
@@ -219,18 +217,6 @@ export class InfoDisplaySpecial extends Component {
     
     handleCloseApprove(){
         this.setState({openApprove:false});
-        this.handleClickSnack();
-    };
-
-    handleClickSnack(){
-        this.setState({openSnack:true});
-    };
-
-    handleCloseSnack = (event, reason)=>{
-        if (reason === 'clickaway') {
-          return;
-        }
-        this.setState({openSnack:false});
     };
 
     //for showing more details
@@ -246,10 +232,24 @@ export class InfoDisplaySpecial extends Component {
     //FOr List Dropdown
     handleClickList1(){
         this.setState({openList1: !(this.state.openList1)});
-    }
+    };
     handleClickList2(){
         this.setState({openList2: !(this.state.openList2)});
-    }
+        
+    };
+
+    //approved or denied stamps
+    toggleShowApproved=()=>{
+        const {showApproved} = this.state;
+        this.setState({showDenied: false});
+        this.setState({showApproved: true});      
+    };
+    toggleShowDenied=()=>{
+        const {showDenied} = this.state;
+        this.setState({showApproved: false});
+        this.setState({showDenied: true});   
+            
+    };
 
     render() {
         const {classes, info:{fullname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,location,departureLocation,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
@@ -268,13 +268,13 @@ export class InfoDisplaySpecial extends Component {
                         <br/>
                         <Typography variant="caption">Submitted On: {applyDate}</Typography>
                         <br/>
-                        <Typography variant="overline">Application Status: <strong>{status}</strong></Typography>
+                        <Typography variant="overline">Application Status: <strong>{this.state.cardStatus}</strong></Typography>
                         <br/>
                         <Typography variant="overline">Permit Type: <strong>{type}</strong></Typography>
                         </div>
                     <p></p>
 
-        {/*Listing Items*/}
+        {/*Listing Items Details*/}
                     <List
                         component="nav"
                         aria-labelledby="nested-list-subheader"
@@ -479,18 +479,44 @@ export class InfoDisplaySpecial extends Component {
                                 <Button onClick={()=>this.deny(permitId)} color="primary" autoFocus>
                                         Deny
                                 </Button>
-                                <div className={classes.root}>
-                                <Snackbar open={this.state.openSnack} autoHideDuration={4000} onClose={()=>this.handleCloseSnack()}>
-                                    <Alert onClose={()=>this.handleCloseSnack()} severity="success">Success</Alert>
-                                </Snackbar>
-                                </div>
                                 </DialogActions>
                             </Dialog>
                         </Grid>
                     </Grid>
                 </div>
+{/*Approve/Deny Buttons END*/}
+
+            </CardContent>
+            <CardContent>
+                {this.state.showApproved && <ShowApprovedStamp/>}
+                {this.state.showDenied && <ShowDeniedStamp/>}
             </CardContent>
     </Card>   
     )
 }}
+
+
+{/**Show Approved Stamp*/}
+
+export class ShowApprovedStamp extends Component {
+    render() {
+        return (
+            <div>
+               <img src="/images/imgApproved.png" alt="approved image" with="251" height="75" ></img>
+            </div>
+        )
+    }
+}
+
+export class ShowDeniedStamp extends Component {
+    render() {
+        return (
+            <div>
+               <img src="/images/imgDenied.png" alt="denied image" with="251" height="75" ></img>
+            </div>
+        )
+    }
+}
+
+
 export default withStyles(styles)(InfoDisplaySpecial);

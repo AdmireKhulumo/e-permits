@@ -111,8 +111,6 @@ export class InfoDisplay extends Component {
             showDenied: false,
             cardStatus: "Pending",
         };
-
-
     };
     
     approve(permitId) {
