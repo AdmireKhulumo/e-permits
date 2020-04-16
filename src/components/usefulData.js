@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Doughnut} from 'react-chartjs-2';
-import {db} from '../firebase';
+import {db, firebaseApp} from '../firebase';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -28,10 +28,7 @@ const styles={
 		margin: 'auto auto auto auto',
 	},
 	table:{
-		
 		margin: 'auto 0px auto auto',
-		
-
 	}
 };
 
@@ -42,8 +39,14 @@ export class userfulData extends Component {
 		esssential: null,
 		special:null,
 		transport: null,
+		esssentialLoc: null,
+		specialLoc:null,
+		transportLoc: null,
 		dataBw:[],
 		totalBw: null,
+		dataLocation: [],
+		totalLocation:[],
+		authLocation: '',
 	};
 
 
@@ -53,52 +56,109 @@ export class userfulData extends Component {
 	
 
 	componentDidMount(){
-		//var essential,transport,special;
+		
+		//count permits
 		db.collection('permits')
 		.where('status','==','Approved').where('type','==','Essential Services')
 		.get()
 		.then((querySnapshot) =>{
 			var size0 = querySnapshot.size;
-			console.log(size0);
-			console.log(querySnapshot);
 			return size0;
 		})     
 		.then((size0)=>{
 			this.setState({essential: size0});
-		});
+		})
+		.catch(err=>console.log(err));
 
 		db.collection('permits')
-		.where('status','==','Approved').where('type','==','Transport Of Essential Goods')
+		.where('status','==','Approved').where('type','==','Transport of Essential Goods')
 		.get()
 		.then((querySnapshot) =>{
 			var size1 = querySnapshot.size;
-			console.log(size1);
-			console.log(querySnapshot);
 			return size1;
 		})
 		.then((size1)=>{
 			this.setState({transport: size1});
-		});
+		})
+		.catch(err=>console.log(err));;
 				
 		db.collection('permits')
 		.where('status','==','Approved').where('type','==','Special Permit')
 		.get()
 		.then((querySnapshot) =>{
 				var size2=querySnapshot.size;
-				console.log(size2);
-				console.log(querySnapshot);
 				return size2;
 		})
 		.then((size2)=>{
 			this.setState({special:size2});
 			this.setState({dataBw: [this.state.essential, this.state.transport, this.state.special]});
 			this.setState({totalBw: (this.state.essential + this.state.transport + this.state.special)});
-			console.log(this.state.esssential);
-		});
+		})
+		.catch(err=>console.log(err));;
 
+
+		//Getting Logged in user's data
+		var verifierEmail = firebaseApp.auth().currentUser.email;
+		console.log(verifierEmail);
+		db.collection("verifiers").doc(`${verifierEmail}`).get()
+			.then((doc)=>{
+				var authLocation = doc.data().authLocation;
+				console.log(authLocation);
+				return authLocation;
+			})
+			.then(authLocation=>{
+				//this.setState({authLocation: location});
+				this.setState({authLocation : authLocation});
+				db.collection('permits')
+				.where('status','==','Approved').where('type','==','Essential Services').where('destination','==',`${this.state.authLocation}`)
+				.get()
+				.then((querySnapshot) =>{
+					var size0 = querySnapshot.size;
+					console.log(size0);
+					return size0;
+				})     
+				.then((size0)=>{
+					this.setState({essentialLoc: size0});
+				})
+				.catch(err=>console.log(err));
+
+				db.collection('permits')
+				.where('status','==','Approved').where('type','==','Transport of Essential Goods').where('destination','==',`${this.state.authLocation}`)
+				.get()
+				.then((querySnapshot) =>{
+					var size1 = querySnapshot.size;
+					console.log(size1);
+					return size1;
+				})
+				.then((size1)=>{
+					this.setState({transportLoc: size1});
+				})
+				.catch(err=>console.log(err));;
+						
+				db.collection('permits')
+				.where('status','==','Approved').where('type','==','Special Permit').where('destination','==',`${this.state.authLocation}`)
+				.get()
+				.then((querySnapshot) =>{
+						var size2=querySnapshot.size;
+						console.log(size2);
+						return size2;
+				})
+				.then((size2)=>{
+					this.setState({specialLoc:size2});
+					console.log(this.state.essentialLoc);
+					console.log(this.state.transportLoc);
+					console.log(this.state.specialLoc);
+					this.setState({dataLocation: [this.state.essentialLoc, this.state.transportLoc, this.state.specialLoc]});
+					this.setState({totalLocation: (this.state.essentialLoc + this.state.transportLoc + this.state.specialLoc)});
+				})
+				.catch(err=>console.log(err));;
+			})
+			.catch(err=>console.log(err));
 	};
+		
 	
 
+	
 	
     render(props) {
 
@@ -113,7 +173,7 @@ export class userfulData extends Component {
 				'Special Permits'
 			],
 			datasets: [{
-				data: [250,86,33],
+				data: this.state.dataBw,
 				backgroundColor: [
 				'#FF6384',
 				'#36A2EB',
@@ -131,14 +191,14 @@ export class userfulData extends Component {
 		};
 
 		//for palapye
-		const data = {
+		const dataLocation = {
 			labels: [
 				'Essential Services',
 				'Transport of Goods',
 				'Special Permits'
 			],
 			datasets: [{
-				data: [10,4,2],
+				data: this.state.dataLocation,
 				backgroundColor: [
 				'#FF6384',
 				'#36A2EB',
@@ -168,28 +228,28 @@ export class userfulData extends Component {
 								<TableCell align="left">
 									<Typography variant="overline">Essential Services</Typography>
 								</TableCell>
-								<TableCell align="right">250</TableCell>
+								<TableCell align="right">{this.state.dataBw[0]}</TableCell>
 							</TableRow>
 
 							<TableRow hover='true' >
 								<TableCell align="left">
 									<Typography variant="overline">Transport of Goods</Typography>
 								</TableCell>
-								<TableCell align="right">86</TableCell>
+								<TableCell align="right">{this.state.dataBw[1]}</TableCell>
 							</TableRow>
 
 							<TableRow hover='true' >
 								<TableCell align="left">
 										<Typography variant="overline">Special Permits</Typography>
 								</TableCell>
-								<TableCell align="right">33</TableCell>
+								<TableCell align="right">{this.state.dataBw[2]}</TableCell>
 							</TableRow>
 
 							<TableRow hover='true' >
 								<TableCell align="left">
 										<Typography variant="overline"><strong>Total</strong></Typography>
 								</TableCell>
-								<TableCell align="right"><strong>369</strong></TableCell>
+								<TableCell align="right"><strong>{this.state.totalBw}</strong></TableCell>
 							</TableRow>
 						</TableBody>
 						</Table>
@@ -202,11 +262,11 @@ export class userfulData extends Component {
 			</Card>
 
 			<Card className={classes.card} varient="outlined" raised={true}>
-				<Typography variant='h5' color='primary'><u>Palapye Active Permit Types</u></Typography>
+				<Typography variant='h5' color='primary'><u>{this.state.authLocation} Active Permit Types</u></Typography>
 				<Grid container spacing={1}>
 
 					<Grid item xs={8}>
-						<Doughnut data={data} />
+						<Doughnut data={dataLocation} />
 					</Grid>
 
 					<Grid item xs={4} className={classes.table}>
@@ -217,28 +277,28 @@ export class userfulData extends Component {
 									<TableCell align="left">
 										<Typography variant="overline">Essential Services</Typography>
 									</TableCell>
-									<TableCell align="right">76</TableCell>
+									<TableCell align="right">{this.state.dataLocation[0]}</TableCell>
 								</TableRow>
 
 								<TableRow hover='true' >
 									<TableCell align="left">
 										<Typography variant="overline">Transport of Goods</Typography>
 									</TableCell>
-									<TableCell align="right">50</TableCell>
+									<TableCell align="right">{this.state.dataLocation[1]}</TableCell>
 								</TableRow>
 
 								<TableRow hover='true' >
 									<TableCell align="left">
 										 <Typography variant="overline">Special Permits</Typography>
 									</TableCell>
-									<TableCell align="right">10</TableCell>
+									<TableCell align="right">{this.state.dataLocation[2]}</TableCell>
 								</TableRow>
 
 								<TableRow hover='true' >
 									<TableCell align="left">
 										 <Typography variant="overline"><strong>Total</strong></Typography>
 									</TableCell>
-									<TableCell align="right"><strong>108</strong></TableCell>
+									<TableCell align="right"><strong>{this.state.totalLocation}</strong></TableCell>
 								</TableRow>
 
 							</TableBody>

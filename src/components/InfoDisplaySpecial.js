@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles'; //import higher order styles component
-import {db} from '../firebase';
+import {db, firebaseApp} from '../firebase';
 import { alert } from 'react-alert';
 
 //MUI imports
@@ -117,7 +117,7 @@ export class InfoDisplaySpecial extends Component {
         this.toggleShowApproved();
         this.setState({cardStatus: "Approved"});
         var verifierDetails={};
-        var verifierEmail="masego.r@gmail.com";
+        var verifierEmail = firebaseApp.auth().currentUser.email;
         db.collection("verifiers").doc(`${verifierEmail}`)
         .get()
         .then(function(doc){
@@ -139,6 +139,7 @@ export class InfoDisplaySpecial extends Component {
             var docRef=db.collection("permits").doc(`${permitId}`);
             return docRef.update({
                 status: "Approved",
+                comment: "",
                 verifierName: verifierDetails.verifierName,
                 verifierDesignation: verifierDetails.verifierDesignation,
                 authPhone: verifierDetails.authPhone,
@@ -161,7 +162,7 @@ export class InfoDisplaySpecial extends Component {
         this.toggleShowDenied();
         this.setState({cardStatus: "Denied"});
         var verifierDetails={};
-        var verifierEmail="masego.r@gmail.com";
+        var verifierEmail = firebaseApp.auth().currentUser.email;
         db.collection("verifiers").doc(`${verifierEmail}`)
         .get()
         .then(function(doc){

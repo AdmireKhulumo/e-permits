@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles'; //import higher order styles component
-import {db} from '../firebase';
+import {db, firebaseApp} from '../firebase';
 import { alert } from 'react-alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import Input from '@material-ui/core/Input';
@@ -94,7 +94,8 @@ export class InfoDisplay extends Component {
         setopenList1:false,
         openList2:false,
         setOpenList2:false,
-        comment: ''
+        comment: '',
+        
     };
 
     //comment section in deny button
@@ -119,7 +120,7 @@ export class InfoDisplay extends Component {
         this.toggleShowApproved();
         this.setState({cardStatus: "Approved"});
         var verifierDetails={};
-        var verifierEmail="masego.r@gmail.com";
+        var verifierEmail = firebaseApp.auth().currentUser.email;
         db.collection("verifiers").doc(`${verifierEmail}`)
         .get()
         .then(function(doc){
@@ -141,6 +142,7 @@ export class InfoDisplay extends Component {
             var docRef=db.collection("permits").doc(`${permitId}`);
             return docRef.update({
                 status: "Approved",
+                comment: "",
                 verifierName: verifierDetails.verifierName,
                 verifierDesignation: verifierDetails.verifierDesignation,
                 authPhone: verifierDetails.authPhone,
@@ -163,7 +165,7 @@ export class InfoDisplay extends Component {
         this.toggleShowDenied();
         this.setState({cardStatus: "Denied"});
         var verifierDetails={};
-        var verifierEmail="masego.r@gmail.com";
+        var verifierEmail = firebaseApp.auth().currentUser.email;
         db.collection("verifiers").doc(`${verifierEmail}`)
         .get()
         .then(function(doc){
@@ -237,7 +239,7 @@ export class InfoDisplay extends Component {
     };
     handleClickList2(){
         this.setState({openList2: !(this.state.openList2)});
-    };
+    };npm 
 
     //approved or denied stamps
     toggleShowApproved=()=>{

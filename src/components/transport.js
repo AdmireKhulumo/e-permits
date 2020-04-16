@@ -85,9 +85,9 @@ export class transport extends Component {
                         this.setState({isLoading: false})
                     };
                 })
+                .catch(err=>console.log(err));
             });
         })
-
         .catch(err=>console.log(err));
     };
 

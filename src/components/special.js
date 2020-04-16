@@ -30,7 +30,6 @@ export class special extends Component {
             var applicant={};
             var dataItems=[];
             querySnapshot.forEach((doc)=> {
-                console.log(this.state.applicationInfo);
                 //for each permit, get it's applicant's information
                 var applicantId = doc.data().applicantId;
                 db.collection("applicants").doc(`${applicantId}`).get()
@@ -85,9 +84,9 @@ export class special extends Component {
                         this.setState({isLoading: false})
                     };
                 })
+                .catch(err=>console.log(err));
             });
         })
-
         .catch(err=>console.log(err));
     };
 

@@ -1,6 +1,6 @@
 import React from 'react';
+import { useCallback, useContext } from "react";
 import {Link} from 'react-router-dom/'
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -23,6 +23,11 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles} from '@material-ui/core/styles';
 import {firebaseApp} from '../firebase';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import Search from './search';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +39,16 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     align:"center"
+  },
+  
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'relative',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 
@@ -81,6 +96,14 @@ export default function MenuAppBar(props) {
     window.location.reload(false);
   };
 
+  function handleSearch(){
+    console.log("search");
+    return <Search/>
+  };
+
+
+  
+
   return (
     <div className={classes.root}>
     <React.Fragment>
@@ -106,7 +129,14 @@ export default function MenuAppBar(props) {
                     </Typography>
                 </div>
 
+                <LightTooltip title="Seach By ID" arrow>
+                <IconButton edge="start" onClick={handleSearch()} className={classes.menuButton} color="inherit" aria-label="home">
+                    <SearchIcon/>
+                </IconButton>
+              </LightTooltip>
+
                 {/*<img src={'./logo'} alt='logo'></img>*/}
+
 
                 {auth && (
                     <div>
