@@ -27,6 +27,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Search from './search';
+import Dialog from '@material-ui/core/Dialog';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     align:"center"
   },
+  card:{
+    display: 'flex',
+    margin: '0px auto 40px auto',
+    alignItems:'center',
+    justifyContent:'center',
+},
   
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -74,11 +81,52 @@ function ElevationScroll(props) {
     });
   }
 
+
+  function SearchDialog(props) {
+    const classes = useStyles();
+    const { onClose, selectedValue, open } = props;
+  
+    const handleClose = () => {
+      onClose(selectedValue);
+    };
+  
+    const handleListItemClick = (value) => {
+      onClose(value);
+    };
+    
+    console.log("search dialogie")
+  
+    return (
+      <div>
+        <Dialog className={classes.card} onClose={handleClose} aria-labelledby="search dialogue" open={open} maxWidth='xl' fullWidth={true} >
+          <Search />
+       </Dialog>
+      </div>
+
+    );
+  }
+
+  SearchDialog.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+  };
+  
+
 export default function MenuAppBar(props) {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+
+  //for search
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -88,19 +136,10 @@ export default function MenuAppBar(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   function handleRefresh() {
     window.location.reload(false);
   };
-
-  function handleSearch(){
-    console.log("search");
-    return <Search/>
-  };
-
 
   
 
@@ -130,10 +169,11 @@ export default function MenuAppBar(props) {
                 </div>
 
                 <LightTooltip title="Seach By ID" arrow>
-                <IconButton edge="start" onClick={handleSearch()} className={classes.menuButton} color="inherit" aria-label="home">
+                <IconButton edge="start" onClick={handleClickOpen} className={classes.menuButton} color="inherit" aria-label="home">
                     <SearchIcon/>
                 </IconButton>
               </LightTooltip>
+              <SearchDialog  open={open} onClose={handleClose} />
 
                 {/*<img src={'./logo'} alt='logo'></img>*/}
 

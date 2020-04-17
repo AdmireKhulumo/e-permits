@@ -33,19 +33,21 @@ export class essentialServices extends Component {
                 return authOffice;
             })
             .then(authOffice=>{
-                this.setState({authOffice:authOffice});
+                this.setState({authOffice: authOffice});
+                console.log("auth office is ", this.state.authOffice)
 
                 db.collection("permits")
                 .where("status", "==", "Pending")
                 .where('type','==','Essential Services')
-                .where('requestedAuthOffice', '==',`${this.state.authOffice}` )
+                //.where('requestedAuthOffice', '==',`${this.state.authOffice}` )
                 .limit(10)
                 .get()
                 .then((querySnapshot) =>{
+                    
                     var applicant={};
                     var dataItems=[];
                     querySnapshot.forEach((doc)=> {
-                        console.log(this.state.applicationInfo);
+                        console.log('requested ', doc.data().requestedAuthOffice);
                         //for each permit, get it's applicant's information
                         var applicantId = doc.data().applicantId;
                         db.collection("applicants").doc(`${applicantId}`).get()
@@ -90,7 +92,13 @@ export class essentialServices extends Component {
                                 physicalAddress: applicant.physicalAddress,
                                 email: applicant.email,
                                 phone: applicant.phone,
-                                location: applicant.location
+                                location: applicant.location,
+                                householdCharacteristics: doc.data().householdCharacteristics,
+                                householdMember1Fullname: doc.data().householdMember1Fullname,
+                                householdMember1Phone: doc.data().householdMember1Phone,
+                                householdMember2Fullname: doc.data().householdMember2Fullname,
+                                householdMember2Phone: doc.data().householdMember2Phone,
+                                toiletTypes: doc.data().toiletTypes,
                             });
                             return dataItems;
                         })
@@ -127,7 +135,7 @@ export class essentialServices extends Component {
             <div>
             <Grid container className="container">
                 <Grid item sm={10} xs={12}>
-                    <React.Suspense fallback={<div>Loading......</div>}>
+                    <React.Suspense>
                         <div>
                             {completePermitMarkup} 
                          </div>

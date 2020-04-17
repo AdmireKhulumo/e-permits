@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import {db} from '../firebase';
+import {db, firebaseApp} from '../firebase';
 import { requirePropFactory } from '@material-ui/core';
 
 //Components
@@ -15,80 +15,106 @@ export class transport extends Component {
 
     state={
         applicationInfo: null, //state variable to store query results
-        isLoading: true
+        isLoading: true,
+        authOffice: '',
     } 
 
     componentDidMount(){
         this._isMounted=true;
 
-        db.collection("permits")
-        .where("status", "==", "Pending")
-        .where('type','==','Transport of Essential Goods')
-        .limit(10)
-        .get()
-        .then((querySnapshot) =>{
-            var applicant={};
-            var dataItems=[];
-            querySnapshot.forEach((doc)=> {
-                console.log(this.state.applicationInfo);
-                //for each permit, get it's applicant's information
-                var applicantId = doc.data().applicantId;
-                db.collection("applicants").doc(`${applicantId}`).get()
-                .then(function(doc){
+        var verifierEmail = firebaseApp.auth().currentUser.email;
+        console.log('verifierEmail below');
+		console.log(verifierEmail);
 
-                        applicant={
-                            fullname: doc.data().fullname,
-                            gender: doc.data().gender,
-                            identificationNum: doc.data().identificationNum,
-                            nationality: doc.data().nationality,
-                            dateOfBirth: doc.data().dateOfBirth,
-                            physicalAddress: doc.data().physicalAddress,
-                            email: doc.data().email,
-                            phone: doc.data().phone,
-                            applicantId: doc.id,
-                            location: doc.data().location
-                        };
-                        return applicant;
-                })
-                .then(applicant=>{
-                    dataItems.push({
-                        permitId: doc.id,
-                        applicantId: doc.data().applicantId,
-                        type: doc.data().type,
-                        organisation: doc.data().organisation,
-                        contactPerson: doc.data().contactPerson,
-                        contactPersonDesignation: doc.data().contactPersonDesignation,
-                        contactPersonNum: doc.data().contactPersonNum,
-                        startDate: doc.data().startDate,
-                        endDate: doc.data().endDate,
-                        endTime: doc.data().endTime,
-                        departureLocation: doc.data().departureLocation,
-                        destination: doc.data().destination,
-                        reason: doc.data().reason,
-                        applyDate: doc.data().applyDate,
-                        status: doc.data().status,
-                        fullname: applicant.fullname,
-                        gender: applicant.gender,
-                        identificationNum: applicant.identificationNum,
-                        nationality: applicant.nationality,
-                        dateOfBirth: applicant.dateOfBirth,
-                        physicalAddress: applicant.physicalAddress,
-                        email: applicant.email,
-                        phone: applicant.phone,
-                        location: applicant.location
+        db.collection('verifiers').doc(`${verifierEmail}`).get()
+            .then((doc)=>{
+                var authOffice = doc.data().authOffice;
+                console.log(authOffice);
+                return authOffice;
+            })
+            .then(authOffice=>{
+                this.setState({authOffice: authOffice});
+                console.log("auth office is ", this.state.authOffice)
+                db.collection("permits")
+                .where("status", "==", "Pending")
+                .where('type','==', 'Transport of Essential Goods')
+                //.where('requestedAuthOffice', '==',`${this.state.authOffice}` )
+                .limit(10)
+                .get()
+                .then((querySnapshot) =>{
+                    
+                    var applicant={};
+                    var dataItems=[];
+                    querySnapshot.forEach((doc)=> {
+                        console.log('requested ', doc.data().requestedAuthOffice);
+                        //for each permit, get it's applicant's information
+                        var applicantId = doc.data().applicantId;
+                        db.collection("applicants").doc(`${applicantId}`).get()
+                        .then(function(doc){
+
+                                applicant={
+                                    fullname: doc.data().fullname,
+                                    gender: doc.data().gender,
+                                    identificationNum: doc.data().identificationNum,
+                                    nationality: doc.data().nationality,
+                                    dateOfBirth: doc.data().dateOfBirth,
+                                    physicalAddress: doc.data().physicalAddress,
+                                    email: doc.data().email,
+                                    phone: doc.data().phone,
+                                    applicantId: doc.id,
+                                    location: doc.data().location,
+                                };
+                                return applicant;
+                        })
+                        .then(applicant=>{
+                            dataItems.push({
+                                permitId: doc.id,
+                                applicantId: doc.data().applicantId,
+                                type: doc.data().type,
+                                organisation: doc.data().organisation,
+                                contactPerson: doc.data().contactPerson,
+                                contactPersonDesignation: doc.data().contactPersonDesignation,
+                                contactPersonNum: doc.data().contactPersonNum,
+                                startDate: doc.data().startDate,
+                                endDate: doc.data().endDate,
+                                endTime: doc.data().endTime,
+                                departureLocation: doc.data().departureLocation,
+                                destination: doc.data().destination,
+                                reason: doc.data().reason,
+                                applyDate: doc.data().applyDate,
+                                status: doc.data().status,
+                                fullname: applicant.fullname,
+                                gender: applicant.gender,
+                                identificationNum: applicant.identificationNum,
+                                nationality: applicant.nationality,
+                                dateOfBirth: applicant.dateOfBirth,
+                                physicalAddress: applicant.physicalAddress,
+                                email: applicant.email,
+                                phone: applicant.phone,
+                                location: applicant.location,
+                                householdCharacteristics: doc.data().householdCharacteristics,
+                                householdMember1Fullname: doc.data().householdMember1Fullname,
+                                householdMember1Phone: doc.data().householdMember1Phone,
+                                householdMember2Fullname: doc.data().householdMember2Fullname,
+                                householdMember2Phone: doc.data().householdMember2Phone,
+                                toiletTypes: doc.data().toiletTypes,
+                            });
+                            return dataItems;
+                        })
+                        .then(dataItems=>{
+                            this.setState({applicationInfo: dataItems});
+                            if (this._isMounted){
+                                this.setState({isLoading: false})
+                            };
+                        })
+                        .catch(err=>console.log(err));
                     });
-                    return dataItems;
-                })
-                .then(dataItems=>{
-                    this.setState({applicationInfo: dataItems});
-                    if (this._isMounted){
-                        this.setState({isLoading: false})
-                    };
                 })
                 .catch(err=>console.log(err));
-            });
-        })
-        .catch(err=>console.log(err));
+            })
+            .catch(err=>console.log(err));
+
+        
     };
 
     componentWillMount(){
@@ -108,7 +134,7 @@ export class transport extends Component {
             <div>
             <Grid container className="container">
                 <Grid item sm={10} xs={12}>
-                    <React.Suspense fallback={<div>Loading......</div>}>
+                    <React.Suspense >
                         <div>
                             {completePermitMarkup} 
                          </div>

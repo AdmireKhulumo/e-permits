@@ -93,7 +93,7 @@ export class InfoDisplay extends Component {
         openList1:false,
         setopenList1:false,
         openList2:false,
-        openList3: false,
+        openList3:false,
         setOpenList2:false,
         comment: '',
         
@@ -263,6 +263,7 @@ export class InfoDisplay extends Component {
             = this.props; //same as const classes = this.props.classes;
 
         const {styles} = this.props;
+        //this.setState({cardStatus: {status}});
                 
         return (
             <Card className={classes.card} varient="outlined" raised={true}>
@@ -275,7 +276,7 @@ export class InfoDisplay extends Component {
                         <br/>
                         <Typography variant="caption">Submitted On: {applyDate}</Typography>
                         <br/>
-                        <Typography variant="overline">Application Status: <strong>{this.state.cardStatus}</strong></Typography>
+                        <Typography variant="overline">Application Status: <strong>{status}</strong></Typography>
                         <br/>
                         <Typography variant="overline">Permit Type: <strong>{type}</strong></Typography>
                         </div>

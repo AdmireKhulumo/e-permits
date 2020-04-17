@@ -57,7 +57,7 @@ export class userfulData extends Component {
 
 	componentDidMount(){
 		
-		//count permits
+		//count permits in bw
 		db.collection('permits')
 		.where('status','==','Approved').where('type','==','Essential Services')
 		.get()
@@ -97,17 +97,17 @@ export class userfulData extends Component {
 		.catch(err=>console.log(err));;
 
 
-		//Getting Logged in user's data
-		var verifierEmail = firebaseApp.auth().currentUser.email;
+		//Getting Logged in user's data and counting permits in their location
+		var verifierEmail = firebaseApp.auth().currentUser.email
 		console.log(verifierEmail);
-		db.collection("verifiers").doc(`${verifierEmail}`).get()
+		db.collection("verifiers").doc(`${verifierEmail}`)
+			.get()
 			.then((doc)=>{
 				var authLocation = doc.data().authLocation;
 				console.log(authLocation);
 				return authLocation;
 			})
-			.then(authLocation=>{
-				//this.setState({authLocation: location});
+			.then(authLocation=>{	
 				this.setState({authLocation : authLocation});
 				db.collection('permits')
 				.where('status','==','Approved').where('type','==','Essential Services').where('destination','==',`${this.state.authLocation}`)

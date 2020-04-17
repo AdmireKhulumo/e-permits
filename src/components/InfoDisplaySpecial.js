@@ -25,6 +25,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import HomeIcon from '@material-ui/icons/Home';
 
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
@@ -90,6 +91,7 @@ export class InfoDisplaySpecial extends Component {
         openList1:false,
         setopenList1:false,
         openList2:false,
+        openList3: false,
         setOpenList2:false,
         comment: ''
     };
@@ -238,6 +240,9 @@ export class InfoDisplaySpecial extends Component {
         this.setState({openList2: !(this.state.openList2)});
         
     };
+    handleClickList3(){
+        this.setState({openList3: !(this.state.openList3)});
+    };
 
     //approved or denied stamps
     toggleShowApproved=()=>{
@@ -253,7 +258,7 @@ export class InfoDisplaySpecial extends Component {
     };
 
     render() {
-        const {classes, info:{fullname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,location,departureLocation,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type}} 
+        const {classes, info:{fullname,gender,permitId,phone,dateOfBirth,identificationNum,nationality,physicalAddress,email,location,departureLocation,destination,reason,startDate,startTime,endDate,endTime,status,applyDate, type, householdMember1Fullname,householdCharacteristics,householdMember1Phone,householdMember2Fullname,householdMember2Phone,toiletTypes}} 
             = this.props; //same as const classes = this.props.classes;
 
         const {styles} = this.props;
@@ -340,6 +345,65 @@ export class InfoDisplaySpecial extends Component {
                             </List>
                         </Collapse>
                     </List>
+
+                    <List
+                        component="nav"
+                        aria-labelledby="nested-list-subheader"
+                        className={classes.root}
+                    >
+                        <ListItem button onClick={()=>this.handleClickList3()} button="true">
+                            <ListItemIcon>
+                                <HomeIcon color="primary"/>
+                            </ListItemIcon>
+                            <ListItemText primary="HOUSEHOLD DETAILS" />
+                            {this.state.openList3 ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+
+                        <Collapse in={this.state.openList3} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                            <ListItem button className={classes.nested}>
+                                <Card className={classes.card} varient="outlined" raised={true}>
+                                    <CardContent className={classes.content}>
+
+                                        <TableContainer>
+                                            <Table className={classes.table} aria-label='personal details'>
+                                                <TableBody>
+                                                    <TableRow hover='true' >
+                                                        <TableCell align="left">Characteristics:</TableCell>
+                                                        <TableCell align="right">{householdCharacteristics}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow hover='true'>
+                                                        <TableCell align="left">Toilet Types:</TableCell>
+                                                        <TableCell align="right">{toiletTypes}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow hover='true'>
+                                                        <TableCell align="left">Member 1's Name:</TableCell>
+                                                        <TableCell align="right">{householdMember1Fullname}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow hover='true'>
+                                                        <TableCell align="left">Member 1's Phone:</TableCell>
+                                                        <TableCell align="right">{householdMember1Phone}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow hover='true'>
+                                                        <TableCell align="left">Member 2's Name:</TableCell>
+                                                        <TableCell align="right">{householdMember2Fullname}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow hover='true'>
+                                                        <TableCell align="left">Memeber 2's Phone:</TableCell>
+                                                        <TableCell align="right">{householdMember2Phone}</TableCell>
+                                                    </TableRow>
+                                                
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                        
+                                    </CardContent>
+                                </Card>
+                            </ListItem>
+                            </List>
+                        </Collapse>
+                    </List>
+
 
                     <List
                         component="nav"
