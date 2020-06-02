@@ -17,6 +17,7 @@ const styles={
         margin: '100px',
         alignItems:'center',
         justifyContent:'center',
+        padding:'10px',
     searchIcon:{
         gridRowEnd: 1,
         order:2,
@@ -26,6 +27,7 @@ const styles={
         gridRow: 1,
         order:1,
         gridColum:1,
+        padding:20
     }
 
     },
@@ -168,7 +170,7 @@ export class search extends Component {
             <div>
             <Grid container className="container" >
                 <Grid item>
-                    <Typography variant = 'h5' color="primary"> <u>Search Permits Using Applicant's ID</u></Typography>
+                    <Typography variant = 'h5' color="primary"> <u>Enter Student ID</u></Typography>
                     <p></p>
                     <p></p>
                     <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
