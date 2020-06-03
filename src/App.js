@@ -40,6 +40,46 @@ const theme = createMuiTheme({
   
 });
 
+//Nims
+/*let authenticated;
+const token = localStorage.FBIdToken;
+if(token){
+  const decodeToken = jwtDecode(token);
+  if(decodeToken.exp * 1000< Date.now()){
+    window.location.href='/login'
+    authenticated=false;
+  }else{
+    authenticated=true;
+  }
+}*/
+
+
+
+
+  //Nims
+ /* constructor()
+  {
+    super();
+      this.state = {
+      loggedInstatus: "NOT_LOGGED_IN",
+      user:{}
+    }
+  }
+
+  componentDidMount(){
+    this.authListener()
+  }
+
+  authListener(){
+    firebaseApp.auth().onAuthStateChanged((user)=>{
+      if(user)
+      {
+        this.setState({user})
+      }else{
+        this.setState({user : null})
+      }
+    })
+  }*/
 const App =()=>{
     return (
       <MuiThemeProvider theme={theme}>
@@ -49,12 +89,16 @@ const App =()=>{
           <Router>
             <Navbar/>
             <div className="container">
-        
+              {/* <Switch>
+                <Route exact path="/" render={props =>(
+                  <verifyApplications{...props} loggedInstatus={this.state.loggedInstatus}/>
+                )}/> */}
                 <PrivateRoute exact path="/" component={verifyApplications}/>
                 <PrivateRoute exact path="/verifyApplications/" component={verifyApplications}/>
                 <Route exact path="/login" component={login}/>
                 <Route exact path="/forgotPassword" component={forgotPassword}/>
-
+              
+              {/*</Switch>*/}
             </div>
           </Router>
         </AuthProvider>

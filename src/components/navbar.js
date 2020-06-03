@@ -98,14 +98,11 @@ function ElevationScroll(props) {
   
     return (
       <div>
-        <Dialog className={classes.card} 
-        onClose={handleClose} 
-        aria-labelledby="search dialogue" 
-        open={open} maxWidth='xl' 
-        fullWidth={true} >
+        <Dialog className={classes.card} onClose={handleClose} aria-labelledby="search dialogue" open={open} maxWidth='xl' fullWidth={true} >
           <Search />
        </Dialog>
       </div>
+
     );
   }
 
@@ -154,14 +151,12 @@ export default function MenuAppBar(props) {
         <AppBar >
             <Toolbar>
               <LightTooltip title="REFRESH" arrow>
-                <IconButton edge="start" 
-                onClick={handleRefresh} 
-                className={classes.menuButton} 
-                color="inherit" 
-                aria-label="home">
+                <IconButton edge="start" onClick={handleRefresh} className={classes.menuButton} color="inherit" aria-label="home">
                     <RefreshIcon/>
                 </IconButton>
               </LightTooltip>
+
+                
 
                 <div style={{ 
                     float       : 'none', 
@@ -169,22 +164,19 @@ export default function MenuAppBar(props) {
                     marginRight : 'auto'
                 }} centered>
                     <Typography variant="h5" className={classes.title} href="./" >
-                       <strong>BIUST Campus Movement Dashboard</strong>
+                       <strong>Botswana Covid-19 E-Permit System</strong>
                     </Typography>
                 </div>
 
                 <LightTooltip title="Seach By ID" arrow>
-                <IconButton edge="start" 
-                onClick={handleClickOpen} 
-                className={classes.menuButton} 
-                color="inherit" 
-                aria-label="home">
+                <IconButton edge="start" onClick={handleClickOpen} className={classes.menuButton} color="inherit" aria-label="home">
                     <SearchIcon/>
                 </IconButton>
               </LightTooltip>
               <SearchDialog  open={open} onClose={handleClose} />
 
                 {/*<img src={'./logo'} alt='logo'></img>*/}
+
 
                 {auth && (
                     <div>
