@@ -1,5 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### Description
+A webapp to be used by Botswana travel e-permit verifiers to either accept or deny an application. Also used to showcase, through graphs, basic data about currently approved permits.
+
+#### Problem:
+People have to line up at the council to get a oermit that allows them to travel into a different zone due to Covid-19 pandemic. This leads to an increased risk of getting the virus, it is slow and inefficient.
+
+#### Solution
+Move the whole system online. Applicants can apply and get results through a mobile app, verifiers can accept/deny applications via this webapp.
+
+System working, but not in use.
+
 ## Available Scripts
 
 In the project directory, you can run:
